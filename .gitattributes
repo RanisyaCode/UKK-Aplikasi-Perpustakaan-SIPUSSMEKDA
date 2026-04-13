@@ -9,6 +9,7 @@
 *.html linguist-vendored
 *.css linguist-vendored
 *.js linguist-vendored
+*.scss linguist-vendored
 
 # Abaikan file dokumentasi dan konfigurasi dari statistik
 /.github export-ignore
