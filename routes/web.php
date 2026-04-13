@@ -91,8 +91,7 @@ Route::middleware('checkLogin:Siswa')->group(function () {
         Route::get('pinjam', [TransaksiSiswaController::class, 'pinjam'])->name('pinjam');
         Route::get('/pinjam-buku/{id}/edit', [TransaksiSiswaController::class, 'edit'])->name('pinjam.edit');
         Route::put('/pinjam-buku/{id}/update', [TransaksiSiswaController::class, 'updatePinjam'])->name('pinjam.update');
-        Route::get('pilih-buku', [TransaksiSiswaController::class, 'formPilih'])->name('pinjam.form');
-        Route::post('pinjam/store', [TransaksiSiswaController::class, 'store'])->name('pinjam.store');
+        Route::get('pilih-buku', [TransaksiSiswaController::class, 'formPilih'])->name('pinjam.form');        Route::post('pinjam/store', [TransaksiSiswaController::class, 'store'])->name('pinjam.store');
         Route::delete('pinjam/delete/{id}', [TransaksiSiswaController::class, 'destroy'])->name('pinjam.destroy');
     
         Route::get('pengembalian', [TransaksiSiswaController::class, 'index'])->name('pengembalian');

@@ -1,6 +1,3 @@
-<!--! ================================================================ !-->
-<!--! [Start] Navigation Manu !-->
-<!--! ================================================================ !-->
 <nav class="nxl-navigation">
     <div class="navbar-wrapper">
         <div class="m-header">
@@ -24,7 +21,7 @@
                     --side-text-active: #0f172a;
                 }
 
-                /* Sidebar Base - Kembalikan ke standar agar tidak merusak layout konten */
+                /* Sidebar Base */
                 .nxl-navigation {
                     background-color: var(--side-bg) !important;
                     border-right: 1px solid var(--side-border) !important;
@@ -66,40 +63,32 @@
                     color: var(--side-text) !important;
                 }
 
-                /* Active State - Menggunakan box-shadow agar tidak menambah lebar elemen */
+                /* Parent Active State (Indikator Ijo samping) */
                 .nxl-navigation .nxl-navbar > .nxl-item.active > .nxl-link {
                     background-color: rgba(16, 185, 129, 0.12) !important;
                     color: var(--primary-emerald) !important;
                     box-shadow: inset 4px 0 0 0 var(--primary-emerald);
                 }
 
-                /* --- FIX SIDEBAR NONGOL & BERANTAKAN --- */
-                
-                /* Pada Desktop Mini (Saat disembunyikan/dikecilkan) */
-                .nxl-mini-navigation .nxl-navigation .nxl-mtext,
-                .nxl-mini-navigation .nxl-navigation .nxl-arrow,
-                .nxl-mini-navigation .nxl-navigation .nxl-caption,
-                .nxl-mini-navigation .nxl-navigation .logo-text {
-                    opacity: 0 !important;
-                    pointer-events: none;
+                /* --- SUBMENU STYLE (POLOS) --- */
+                /* Membuat submenu yang aktif jadi hijau polos tanpa background ijo pekat */
+                .nxl-navigation .nxl-navbar .nxl-submenu .nxl-item.active > .nxl-link {
+                    color: var(--primary-emerald) !important;
+                    background: transparent !important; /* Polos tanpa background box */
+                    font-weight: 700;
                 }
 
                 /* Responsive Mobile Fix */
                 @media (max-width: 1024px) {
-                    /* Hilangkan paksa sidebar yang "nongol" sedikit di kiri */
                     .nxl-navigation {
-                        left: -280px !important; /* Geser lebih jauh ke luar layar */
+                        left: -280px !important;
                         visibility: hidden;
                     }
-
-                    /* Munculkan kembali saat tombol menu diklik */
                     .nxl-mobile-menu-opened .nxl-navigation {
                         left: 0 !important;
                         visibility: visible;
                         z-index: 2000;
                     }
-                    
-                    /* Reset margin konten agar tidak terpotong ke kanan */
                     .nxl-container, .nxl-header {
                         margin-left: 0 !important;
                         width: 100% !important;
@@ -107,14 +96,12 @@
                     }
                 }
 
-                /* Sync warna icon saat aktif */
                 .nxl-navigation .nxl-navbar .nxl-item.active > .nxl-link .nxl-micon i {
                     color: var(--primary-emerald) !important;
                 }
 
-                /* Perbaikan Submenu Background */
                 .nxl-navigation .nxl-navbar .nxl-submenu {
-                    background-color: var(--side-item-hover) !important;
+                    background-color: transparent !important;
                 }
             </style>
 
@@ -162,24 +149,22 @@
                         <span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item {{ (Route::is('admin.transaksi.peminjaman') || Route::is('admin.transaksi.create') || Route::is('admin.transaksi.edit-pengembalian*')) ? 'active' : '' }}">
+                        <li class="nxl-item {{ (request()->routeIs('admin.transaksi.peminjaman*') || request()->routeIs('admin.transaksi.create') || request()->routeIs('admin.transaksi.edit')) ? 'active' : '' }}">
                             <a class="nxl-link" href="{{ route('admin.transaksi.peminjaman') }}">Peminjaman</a>
                         </li>
-                        <li class="nxl-item {{ Request::is('*pengembalian*') ? 'active' : '' }}">
+                        <li class="nxl-item {{ (request()->routeIs('admin.transaksi.pengembalian*') || request()->routeIs('admin.transaksi.edit_pengembalian*')) ? 'active' : '' }}">
                             <a class="nxl-link" href="{{ route('admin.transaksi.pengembalian') }}">Pengembalian</a>
                         </li>
                     </ul>
                 </li>
             @else
                 <li class="nxl-item nxl-caption"><label>Siswa Area</label></li>
-
                 <li class="nxl-item {{ request()->routeIs('katalog*') ? 'active' : '' }}">
                     <a href="{{ route('katalog') }}" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-grid"></i></span>
                         <span class="nxl-mtext">E-Katalog</span>
                     </a>
                 </li>
-
                 <li class="nxl-item nxl-hasmenu {{ request()->is('transaksi*') || request()->routeIs('pinjam*') || request()->routeIs('pengembalian.index*') ? 'active nxl-trigger' : '' }}">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-refresh-cw"></i></span>
@@ -199,6 +184,3 @@
         </ul>
     </div>
 </nav>
-<!--! ================================================================ !-->
-<!--! [End] Navigation Manu !-->
-<!--! ================================================================ !-->

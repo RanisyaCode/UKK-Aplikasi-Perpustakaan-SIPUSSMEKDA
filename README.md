@@ -1,59 +1,65 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SIPUS SMEKDA (Sistem Informasi Perpustakaan SMEKDA)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+SIPUS SMEKDA adalah aplikasi perpustakaan digital berbasis web yang dirancang untuk mendigitalisasi sirkulasi peminjaman buku di SMKN 2 Purwakarta. Dibangun dengan fokus pada integritas data dan keamanan transaksi menggunakan Laravel.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Stack Teknologi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Framework:** Laravel 12
+- **Bahasa Pemrograman:** PHP 8+
+- **Frontend:** Bootstrap 5, JavaScript (ES6+)
+- **Database:** MySQL/MariaDB (Menggunakan Database Transaction dan Row Locking)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Akun Login Demo
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Gunakan akun di bawah ini untuk menguji fungsionalitas sistem:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Role | Email / Akun | Password |
+| :--- | :--- | :--- |
+| Admin | admin@gmail.com | 123123123 |
+| Siswa | coco@gmail.com | 123123123 |
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Alur Kerja Sistem
 
-### Premium Partners
+### Prosedur Peminjaman
+1. **Registrasi Akun:** Siswa mendaftar sebagai anggota resmi terlebih dahulu.
+2. **Katalog Digital:** Menjelajahi koleksi melalui katalog untuk memilih buku.
+3. **Isi Form Pinjam:** Masuk ke menu **Peminjaman Saya** dan isi detail buku yang dipilih.
+4. **Verifikasi Admin:** Menunggu persetujuan admin (validasi stok dan kuota).
+5. **Pengambilan Buku:** Mengambil buku fisik di perpustakaan setelah status **Disetujui**.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Prosedur Pengembalian
+1. **Akses Akun:** Login menggunakan akun yang sudah terdaftar.
+2. **Menu Pengembalian:** Pilih buku yang sedang dipinjam pada sidebar navigasi.
+3. **Ajukan Sistem:** Klik tombol **Ajukan Pengembalian**.
+4. **Status Verifikasi:** Status pada sistem berubah menjadi **Menunggu Verifikasi**.
+5. **Penyerahan Fisik:** Serahkan buku ke petugas untuk pengecekan kondisi dan validasi denda.
+6. **Validasi dan Selesai:** Petugas melakukan konfirmasi dan stok buku otomatis kembali ke rak.
 
-## Contributing
+**Catatan Penting:** Pengajuan di sistem belum dianggap selesai sebelum buku fisik diserahkan langsung ke petugas perpustakaan.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Fitur Utama Sistem
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Dashboard Overview
+- **Admin Dashboard:** Menampilkan ringkasan statistik real-time (Total Anggota: 11, Total Buku: 11, Sedang Dipinjam: 2, Keterlambatan: 0). Menggunakan aksen warna merah.
+- **Siswa Dashboard:** Menampilkan koleksi buku unggulan dan tombol akses cepat ke menu peminjaman dan pengembalian. Menggunakan aksen warna hijau.
 
-## Security Vulnerabilities
+### 2. Fitur Admin (Control Center)
+- **Data Master:**
+    - **Kelola Data Buku:** Fungsi CRUD untuk judul, penulis, stok, dan kategori buku.
+    - **Data Anggota:** Manajemen akun siswa dan admin (Tambah, Edit, Hapus).
+- **Operation:**
+    - **Transaksi Peminjaman:** Verifikasi pengajuan pinjam dengan kontrol stok menggunakan `lockForUpdate`.
+    - **Transaksi Pengembalian:** Validasi akhir pengembalian fisik dan pembaruan stok otomatis.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 3. Fitur Siswa (User Experience)
+- **Katalog Literasi:** Akses ke berbagai kategori buku (Sastra, Teknologi, Edukasi).
+- **Peminjaman Mandiri:** Sistem kuota maksimal 3 buku dengan otomatisasi tanggal kembali (7 hari dari tanggal pinjam).
+- **Riwayat dan Catatan:** Melihat status transaksi serta alasan jika pengajuan ditolak oleh admin.

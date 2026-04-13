@@ -45,8 +45,11 @@
             background-image: radial-gradient(circle at 2px 2px, var(--border-white) 1px, transparent 0);
             background-size: 32px 32px;
             color: var(--text-main);
-            margin: 0; min-height: 100vh;
-            display: flex; align-items: center; justify-content: center;
+            margin: 0; 
+            min-height: 100vh;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
@@ -55,29 +58,72 @@
         .partikel { position: absolute; background: var(--accent-emerald); border-radius: 50%; opacity: 0; animation: terbang linear infinite; filter: blur(1px); }
         @keyframes terbang { 0% { transform: translateY(105vh) scale(0.5); opacity: 0; } 50% { opacity: 0.3; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
         .ambient-glow { position: fixed; width: 60vw; height: 60vh; background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%); top: -10%; left: -10%; z-index: -1; pointer-events: none; }
-        .container-main { width: 100%; max-width: 1200px; padding: 2rem; display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; position: relative; z-index: 1; }
         
-        /* Step Timeline UI */
-        .step-item { position: relative; margin-bottom: 1.5rem; padding-left: 2rem; }
+        /* RESPONSIVE LAYOUT FIX */
+        .container-main { 
+            width: 100%; 
+            max-width: 1200px; 
+            padding: 2rem; 
+            display: grid; 
+            grid-template-columns: 1.3fr 1fr; 
+            gap: 4rem; 
+            position: relative; 
+            z-index: 1; 
+        }
+
+        /* Perbaikan untuk layar Tablet/HP agar tidak kepotong */
+        @media (max-width: 1100px) {
+            .container-main { 
+                grid-template-columns: 1fr; 
+                gap: 2rem; 
+                padding: 5rem 1.5rem;
+                text-align: center;
+            }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+            .title-huge { font-size: 3.5rem !important; }
+            .sub-description { margin-left: auto; margin-right: auto; }
+            .control-panel { position: relative !important; top: 0 !important; }
+        }
+
+        @media (max-width: 576px) {
+            .title-huge { font-size: 2.5rem !important; letter-spacing: -2px !important; }
+            .container-main { padding: 4rem 1rem; }
+            .control-panel { padding: 2rem !important; border-radius: 32px !important; }
+            .chip-status { font-size: 0.6rem; padding: 0.4rem 0.8rem; }
+        }
+        
+        .step-item { position: relative; margin-bottom: 1.5rem; padding-left: 2rem; text-align: left; }
         .step-item::before { content: ''; position: absolute; left: 0; top: 0.2rem; width: 12px; height: 12px; border-radius: 50%; background: var(--seg-bg); border: 2px solid var(--accent-emerald); }
         .step-item.active::before { background: var(--accent-emerald); box-shadow: 0 0 10px var(--accent-emerald); }
         .step-title { font-weight: 700; font-size: 0.9rem; color: var(--text-main); margin-bottom: 2px; }
         .step-desc { font-size: 0.75rem; color: var(--text-silver); }
 
         .chip-status { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.7rem; font-weight: 800; color: var(--accent-emerald); letter-spacing: 2px; margin-bottom: 2rem; text-transform: uppercase; }
-        .title-huge { font-size: 5rem; font-weight: 800; line-height: 0.9; letter-spacing: -4px; margin-bottom: 1.5rem; color: var(--text-main); }
+        
+        .title-huge { 
+            font-size: 5rem; 
+            font-weight: 800; 
+            line-height: 1.1; 
+            letter-spacing: -4px; 
+            margin-bottom: 1.5rem; 
+            color: var(--text-main); 
+            word-wrap: break-word; /* Mencegah teks keluar container */
+        }
         .title-huge span { 
-        background: var(--gradasi); 
-        -webkit-background-clip: text; 
-        background-clip: text;      
-        -webkit-text-fill-color: transparent;}        
+            background: var(--gradasi); 
+            -webkit-background-clip: text; 
+            background-clip: text;      
+            -webkit-text-fill-color: transparent;
+        }        
         .sub-description { font-size: 1.1rem; color: var(--text-silver); line-height: 1.7; max-width: 500px; margin-bottom: 3.5rem; }
-        .book-card-mini { background: var(--card-glass); border: 1px solid var(--border-white); border-radius: 24px; padding: 1.5rem; backdrop-filter: blur(25px); position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .book-card-mini { background: var(--card-glass); border: 1px solid var(--border-white); border-radius: 24px; padding: 1.5rem; backdrop-filter: blur(25px); position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: left; width: 100%; }
         .label-header { font-size: 0.75rem; font-weight: 800; color: #475569; letter-spacing: 2px; margin-bottom: 1.5rem; display: block; }
         .book-entry { display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid transparent; transition: 0.3s; margin-bottom: 0.75rem; }
         [data-theme="light"] .book-entry { background: rgba(15, 23, 42, 0.03); }
         .book-entry:hover { border-color: var(--accent-emerald); background: rgba(16, 185, 129, 0.05); transform: translateX(10px); }
-        .control-panel { background: var(--panel-bg); border: 1px solid var(--border-white); border-radius: 48px; padding: 3.5rem; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2); position: sticky; top: 2rem; backdrop-filter: blur(20px); }
+        
+        .control-panel { background: var(--panel-bg); border: 1px solid var(--border-white); border-radius: 48px; padding: 3.5rem; box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2); position: sticky; top: 2rem; backdrop-filter: blur(20px); text-align: left; }
+        
         .quota-monitor { margin-bottom: 3rem; }
         .monitor-label { display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 700; font-size: 0.8rem; }
         .segments { display: flex; gap: 10px; }
@@ -86,7 +132,6 @@
         .btn-luxe { background: var(--text-main); color: var(--bg-deep); border: none; padding: 1.25rem; border-radius: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 0.75rem; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; text-decoration: none; }
         .btn-luxe:hover { background: var(--accent-emerald); color: #fff; transform: translateY(-5px); box-shadow: 0 15px 30px -10px rgba(16, 185, 129, 0.5); }
         
-        /* Tombol Info Alur (Baru) */
         .btn-info-alur { background: rgba(255, 255, 255, 0.02); color: var(--text-silver); border: 1px dashed var(--border-white); padding: 0.8rem; border-radius: 16px; font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; margin-bottom: 1rem; width: 100%; cursor: pointer; }
         .btn-info-alur:hover { background: rgba(16, 185, 129, 0.05); color: var(--accent-emerald); border-color: var(--accent-emerald); }
 
@@ -97,9 +142,6 @@
         @keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.5; } 100% { transform: scale(0.9); opacity: 1; } }
         .memo-terminal { margin-top: 3rem; padding: 1.5rem; border-radius: 24px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.1); }
         .theme-switcher { position: fixed; bottom: 30px; right: 30px; z-index: 9999; background: var(--gradasi); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
-        .modal-content select option { background: #1a1f26; color: white; }
-        [data-theme="light"] .modal-content select option { background: white; color: #0f172a; }
-        .modal-backdrop.show { opacity: 0.7; backdrop-filter: blur(5px); }
     </style>
 </head>
 <body>
@@ -126,15 +168,15 @@
                 
                 @forelse($transaksiAktif as $t)
                     <div class="book-entry d-flex align-items-center justify-content-between">
-                        <div class="flex-grow-1">
-                            <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;">{{ $t->buku->judul }}</div>
+                        <div class="flex-grow-1 overflow-hidden">
+                            <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;" class="text-truncate">{{ $t->buku->judul }}</div>
                             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent-emerald); font-weight: 700; margin-top: 4px;">
                                 <span class="pulse-dot me-2"></span>{{ strtoupper($t->status) }}
                             </div>
                         </div>
                         
                         @if($t->status == 'Menunggu Pinjam')
-                        <div class="d-flex gap-2">
+                        <div class="d-flex gap-2 ms-2">
                             <a href="{{ route('pinjam.edit', $t->id) }}" class="btn btn-sm btn-outline-info rounded-3">
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
@@ -143,7 +185,7 @@
                             </button>
                         </div>
                         @else
-                        <i class="bi bi-lock-fill text-muted"></i>
+                        <i class="bi bi-lock-fill text-muted ms-2"></i>
                         @endif
                     </div>
                 @empty
@@ -240,26 +282,11 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="step-item">
-                        <div class="step-title">1. Registrasi Akun</div>
-                        <div class="step-desc">Siswa wajib daftar sebagai anggota perpustakaan terlebih dahulu.</div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-title">2. Katalog Digital</div>
-                        <div class="step-desc">Lihat-lihat koleksi buku melalui katalog digital untuk memilih buku.</div>
-                    </div>
-                    <div class="step-item active">
-                        <div class="step-title">3. Isi Form Pinjam</div>
-                        <div class="step-desc">Ke menu "Peminjaman Saya" lalu isi form sesuai buku yang dipilih.</div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-title">4. Verifikasi Admin</div>
-                        <div class="step-desc">Tunggu hingga admin menyetujui pengajuan peminjaman kamu.</div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-title">5. Pengambilan Buku</div>
-                        <div class="step-desc">Jika sudah disetujui, langsung ambil buku fisiknya ke perpustakaan.</div>
-                    </div>
+                    <div class="step-item"><div class="step-title">1. Registrasi Akun</div><div class="step-desc">Siswa wajib daftar sebagai anggota perpustakaan terlebih dahulu.</div></div>
+                    <div class="step-item"><div class="step-title">2. Katalog Digital</div><div class="step-desc">Lihat-lihat koleksi buku melalui katalog digital untuk memilih buku.</div></div>
+                    <div class="step-item active"><div class="step-title">3. Isi Form Pinjam</div><div class="step-desc">Ke menu "Peminjaman Saya" lalu isi form sesuai buku yang dipilih.</div></div>
+                    <div class="step-item"><div class="step-title">4. Verifikasi Admin</div><div class="step-desc">Tunggu hingga admin menyetujui pengajuan peminjaman kamu.</div></div>
+                    <div class="step-item"><div class="step-title">5. Pengambilan Buku</div><div class="step-desc">Jika sudah disetujui, langsung ambil buku fisiknya ke perpustakaan.</div></div>
                     <button class="btn-luxe w-100 mt-3" data-bs-dismiss="modal">Saya Mengerti</button>
                 </div>
             </div>
@@ -268,51 +295,13 @@
 
     @foreach($transaksiAktif as $t)
         @if($t->status == 'Menunggu Pinjam')
-            <div class="modal fade" id="editModal{{ $t->id }}" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content border-0" style="background: var(--panel-bg); backdrop-filter: blur(20px); border-radius: 28px; border: 1px solid var(--border-white);">
-                        <div class="modal-header border-0 pb-0">
-                            <h5 class="modal-title fw-bold" style="color: var(--text-main);">Edit Pengajuan</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="{{ route('pinjam.update', $t->id) }}" method="POST">
-                            @csrf @method('PUT')
-                            <div class="modal-body p-4">
-                                <div class="mb-3">
-                                    <label class="label-header mb-2">PILIH BUKU</label>
-                                    <select name="buku_id" class="form-select bg-dark border-secondary text-white rounded-3">
-                                        @foreach($semuaBuku as $b)
-                                            <option value="{{ $b->id }}" {{ $t->buku_id == $b->id ? 'selected' : '' }}>{{ $b->judul }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="label-header mb-2">TANGGAL PINJAM</label>
-                                    <input type="date" name="tgl_pinjam" class="form-control bg-dark border-secondary text-white rounded-3" value="{{ $t->tanggal_pinjam->format('Y-m-d') }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="label-header mb-2">CATATAN TAMBAHAN</label>
-                                    <textarea name="catatan" class="form-control bg-dark border-secondary text-white rounded-3" rows="3">{{ $t->catatan }}</textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer border-0 pt-0">
-                                <button type="submit" class="btn-luxe w-100 py-2">Simpan Perubahan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
             <div class="modal fade" id="modalHapus{{ $t->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-sm modal-dialog-centered">
                     <div class="modal-content border-0" style="background: var(--panel-bg); backdrop-filter: blur(25px); border-radius: 32px; border: 1px solid var(--border-white);">
                         <div class="modal-body p-4 text-center">
-                            <div class="mb-4 position-relative">
-                                <i class="bi bi-trash3-fill text-danger" style="font-size: 4rem; opacity: 0.1; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);"></i>
-                                <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
-                            </div>
+                            <i class="bi bi-exclamation-triangle-fill text-danger mb-3" style="font-size: 3rem;"></i>
                             <h5 class="fw-800 mb-2" style="color: var(--text-main);">Batalkan Pinjaman?</h5>
-                            <p class="small mb-4" style="color: var(--text-silver);">Yakin menghapus pengajuan <b style="color: var(--text-main)">"{{ $t->buku->judul }}"</b>?</p>
+                            <p class="small mb-4" style="color: var(--text-silver);">Yakin menghapus pengajuan <b>"{{ $t->buku->judul }}"</b>?</p>
                             <div class="d-grid gap-2">
                                 <form action="{{ route('pinjam.destroy', $t->id) }}" method="POST">
                                     @csrf @method('DELETE')
@@ -330,62 +319,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const msgSuccess = "{{ session('success') }}";
-        const msgError = "{{ session('error') }}";
-
-        // 2. Fungsi untuk mendeteksi mode saat ini
-        const getThemeConfig = () => {
-            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-            return {
-                background: isLight ? '#ffffff' : 'rgba(15, 23, 42, 0.95)',
-                color: isLight ? '#1e293b' : '#ffffff',
-                confirmButtonColor: '#10b981', // Tetap Emerald agar ikonik
-                backdrop: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(2, 6, 23, 0.7)',
-                className: isLight ? 'border-light' : 'border-dark'
-            };
-        };
-
-        // 3. Eksekusi Alert Sukses
         if (msgSuccess) {
-            const config = getThemeConfig();
             Swal.fire({
                 icon: 'success',
-                title: '<span style="font-weight:800; font-family:\'Plus Jakarta Sans\'">Berhasil!</span>',
-                html: `<span style="font-family:\'Plus Jakarta Sans\'; font-size: 0.9rem;">${msgSuccess}</span>`,
-                background: config.background,
-                color: config.color,
-                confirmButtonColor: config.confirmButtonColor,
-                backdrop: config.backdrop,
-                showClass: {
-                    popup: 'animate__animated animate__fadeInUp animate__faster'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutDown animate__faster'
-                },
-                customClass: {
-                    popup: 'rounded-4 border-0 shadow-lg'
-                }
+                title: 'Berhasil!',
+                text: msgSuccess,
+                confirmButtonColor: '#10b981',
+                customClass: { popup: 'rounded-4' }
             });
         }
 
-        // 4. Eksekusi Alert Error
-        if (msgError) {
-            const config = getThemeConfig();
-            Swal.fire({
-                icon: 'error',
-                title: '<span style="font-weight:800; font-family:\'Plus Jakarta Sans\'">Terjadi Kesalahan</span>',
-                html: `<span style="font-family:\'Plus Jakarta Sans\'; font-size: 0.9rem;">${msgError}</span>`,
-                background: config.background,
-                color: config.color,
-                confirmButtonColor: '#ef4444',
-                backdrop: config.backdrop,
-                customClass: {
-                    popup: 'rounded-4 border-0 shadow-lg'
-                }
-            });
-        }
-
+        // Particles
         const container = document.getElementById('particles-container');
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 20; i++) {
             const p = document.createElement('div');
             p.className = 'partikel';
             p.style.left = Math.random() * 100 + 'vw';
@@ -405,9 +351,13 @@
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
             icon.className = newTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-fill';
+            
             fetch("{{ route('update.theme') }}", {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
+                },
                 body: JSON.stringify({ theme: newTheme })
             });
         });

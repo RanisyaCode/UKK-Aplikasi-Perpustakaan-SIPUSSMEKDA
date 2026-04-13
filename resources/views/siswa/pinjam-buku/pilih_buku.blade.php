@@ -3,602 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIPUS SMEKDA | Terminal Pengembalian</title>
+    <title>Form Peminjaman | SIPUS SMEKDA</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('duralux/assets/images/logo/logo open book perpus.png') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
         :root {
-            --bg-deep: #010307;
-            --accent-emerald: #10b981;
-            --accent-blue: #3b82f6;
-            --accent-danger: #ef4444;
-            --accent-warning: #f59e0b;
-            --text-main: #ffffff;
-            --text-muted: #cbd5e1;
-            --card-glass: rgba(10, 15, 25, 0.85);
-            --border-bright: rgba(255, 255, 255, 0.15);
-            --gradasi: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-            --latar-radial: radial-gradient(circle at 50% 10%, #0f172a 0%, #010307 100%);
-            --item-bg: rgba(255, 255, 255, 0.04);
+            --bg-body: #020617;
+            --emerald: #10b981;
+            --ocean: #0ea5e9;
+            --gradasi: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            --kaca: rgba(255, 255, 255, 0.03);
+            --garis: rgba(255, 255, 255, 0.08);
+            --teks-main: #f1f5f9;
+            --teks-muted: #94a3b8;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --latar-gradient: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+            --danger: #ef4444;
         }
 
         [data-theme="light"] {
-            --bg-deep: #f8fafc;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --card-glass: rgba(255, 255, 255, 0.9);
-            --border-bright: rgba(15, 23, 42, 0.1);
-            --latar-radial: radial-gradient(circle at 50% 10%, #f1f5f9 0%, #f8fafc 100%);
-            --item-bg: rgba(15, 23, 42, 0.04);
+            --bg-body: #f8fafc;
+            --kaca: rgba(15, 23, 42, 0.04);
+            --garis: rgba(15, 23, 42, 0.08);
+            --teks-main: #0f172a;
+            --teks-muted: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --latar-gradient: radial-gradient(circle at 50% 50%, #f1f5f9 0%, #f8fafc 100%);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            margin: 0;
+            background-color: var(--bg-body);
+            color: var(--teks-main);
             min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
-            padding-top: 5vh;
-        }
-
-        #particles-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .partikel {
-            position: absolute;
-            background: var(--accent-emerald);
-            border-radius: 50%;
-            opacity: 0;
-            bottom: -20px;
-            filter: blur(1px);
-            box-shadow: 0 0 10px var(--accent-emerald);
-            animation: terbang linear infinite;
-        }
-
-        @keyframes terbang {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
-            20% { opacity: 0.5; }
-            100% { transform: translateY(-110vh) scale(0.5); opacity: 0; }
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .btn-floating-info {
-            animation: floating 3s ease-in-out infinite;
-            display: inline-flex;
-            align-items: center;
-            color: var(--accent-blue);
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        .btn-floating-info:hover {
-            color: var(--accent-emerald);
-            transform: scale(1.05);
+            display: flex; align-items: center; justify-content: center;
+            overflow-x: hidden; padding: 40px 20px; margin: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .latar-animasi {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: var(--latar-radial);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; background: var(--latar-gradient);
         }
 
-        .container-main {
-            width: 100%;
-            max-width: 1200px;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 0.92fr;
-            gap: 3.5rem;
-            position: relative;
-            z-index: 1;
-            align-items: start;
+        .partikel {
+            position: absolute; background: var(--emerald); border-radius: 50%; opacity: 0;
+            animation: terbang linear infinite; filter: blur(1px);
+        }
+        @keyframes terbang {
+            0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+            20% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
-        .title-huge {
-            font-size: 3.2rem;
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -2px;
-            margin-bottom: 1.2rem;
-            color: var(--text-main);
+        .form-wrapper { width: 100%; max-width: 680px; position: relative; z-index: 1; }
+        
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--garis);
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.3);
         }
 
-        .title-huge span {
+        .card-header-luxe { padding: 40px 40px 10px; text-align: left; }
+        .card-header-luxe h2 { 
+            font-weight: 800; font-size: 1.8rem; letter-spacing: -1px;
             background: var(--gradasi);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .control-panel {
-            background: var(--card-glass);
-            border: 1px solid var(--border-bright);
-            border-radius: 32px;
-            padding: 2.5rem;
-            backdrop-filter: blur(40px);
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.2);
+        .card-body-luxe { padding: 20px 40px 40px; }
+
+        .section-tag {
+            font-size: 0.65rem; font-weight: 800; color: var(--emerald);
+            letter-spacing: 2px; text-transform: uppercase;
+            margin: 25px 0 15px; display: flex; align-items: center; gap: 10px;
+        }
+        .section-tag::after { content: ""; height: 1px; flex-grow: 1; background: var(--garis); }
+
+        .field-group { margin-bottom: 20px; }
+        .field-group label { 
+            display: block; font-size: 0.75rem; font-weight: 700; 
+            color: var(--teks-muted); margin-bottom: 10px; margin-left: 5px;
         }
 
-        .status-history-item {
-            background: var(--item-bg);
-            border: 1px solid var(--border-bright);
-            border-radius: 20px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .error-msg {
+            color: var(--danger); font-size: 0.65rem; font-weight: 600;
+            margin-top: 6px; margin-left: 5px; display: block;
         }
 
-        .status-history-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
+        .custom-input {
+            width: 100%; background: var(--kaca); border: 1px solid var(--garis);
+            border-radius: 18px; padding: 14px 20px; color: var(--teks-main);
+            font-size: 0.95rem; transition: all 0.3s ease;
+        }
+        .custom-input.is-invalid { border-color: var(--danger); background: rgba(239, 68, 68, 0.05); }
+        .custom-input:focus { outline: none; border-color: var(--emerald); background: rgba(16, 185, 129, 0.05); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
+
+        .readonly-mode { background: rgba(0,0,0,0.03) !important; color: var(--teks-muted) !important; cursor: not-allowed; border-style: dashed; }
+
+        .search-container { position: relative; margin-bottom: 20px; }
+        .search-container i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--emerald); font-size: 1.1rem; }
+        .search-container .custom-input { padding-left: 50px; border-radius: 20px; background: rgba(0,0,0,0.1); }
+
+        .book-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 20px; max-height: 350px; overflow-y: auto;
+            padding: 15px; background: rgba(0,0,0,0.15); border-radius: 24px;
+            border: 1px solid var(--garis); margin-bottom: 10px;
         }
 
-        .note-bubble {
-            background: rgba(245, 158, 11, 0.08);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            border-radius: 14px;
-            padding: 12px 15px;
-            margin-top: 12px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+        /* Responsive Grid Fix */
+        @media (max-width: 576px) {
+            .book-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
+            .card-header-luxe, .card-body-luxe { padding-left: 20px; padding-right: 20px; }
+            .card-header-luxe h2 { font-size: 1.5rem; }
+        }
+        
+        .book-item {
+            background: var(--kaca); border: 2px solid transparent;
+            border-radius: 20px; padding: 12px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; position: relative;
+        }
+        .book-item:hover { background: rgba(255, 255, 255, 0.05); transform: translateY(-5px); }
+        .book-item.selected { 
+            border-color: var(--emerald); 
+            background: rgba(16, 185, 129, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.2);
+        }
+        .book-item.selected::before {
+            content: "\F272"; font-family: "bootstrap-icons";
+            position: absolute; top: 10px; right: 10px; z-index: 2;
+            background: var(--emerald); color: white; width: 24px; height: 24px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; border: 2px solid var(--card-bg);
         }
 
-        .note-bubble i { color: var(--accent-warning); font-size: 1.1rem; }
-        .note-text { color: var(--accent-warning); font-size: 0.85rem; line-height: 1.4; font-weight: 500; margin: 0; opacity: 0.9; }
-
-        [data-theme="dark"] .note-text { color: #fde68a; }
-
-        .note-label {
-            display: block;
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--accent-warning);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 3px;
+        .book-cover { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 14px; margin-bottom: 12px; }
+        .book-title { 
+            font-size: 0.75rem; font-weight: 700; color: var(--teks-main);
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            line-clamp: 2; overflow: hidden; line-height: 1.3;
         }
 
-        .badge-status {
-            padding: 5px 12px;
-            border-radius: 100px;
-            font-size: 0.6rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .btn-gradasi {
+            background: var(--gradasi); color: white; border: none; width: 100%;
+            padding: 16px; border-radius: 20px; font-weight: 800; font-size: 1rem;
+            letter-spacing: 1px; transition: all 0.4s; margin-top: 20px; cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
         }
+        .btn-gradasi:hover { transform: translateY(-4px); box-shadow: 0 20px 30px -10px rgba(16, 185, 129, 0.5); }
 
-        .bg-success-alt { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .bg-pending { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
-        .bg-rejected { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-
-        .btn-luxe {
-            background: var(--gradasi);
-            color: #ffffff !important;
-            border: none;
-            padding: 1.1rem;
-            border-radius: 18px;
-            font-weight: 800;
-            width: 100%;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .btn-batal {
+            display: block; text-align: center; color: var(--teks-muted);
+            text-decoration: none; font-size: 0.85rem; font-weight: 700;
+            margin-top: 20px; transition: 0.3s;
         }
+        .btn-batal:hover { color: var(--emerald); }
 
-        .btn-luxe:hover:not(:disabled) { transform: scale(1.02); box-shadow: 0 15px 30px -10px rgba(16, 185, 129, 0.5); }
-        .btn-luxe:disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(1); }
-
-        .btn-ghost:hover { opacity: 1 !important; color: var(--accent-emerald) !important; }
-
-        .book-selector-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
-            gap: 15px;
-            margin-bottom: 1.5rem;
-        }
-
-        .book-option {
-            cursor: pointer;
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid transparent;
-            transition: 0.3s;
-            background: var(--item-bg);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-content-luxe {
-            background: var(--card-glass);
-            backdrop-filter: blur(40px);
-            border: 1px solid var(--border-bright);
-            border-radius: 35px;
-            overflow: hidden;
-        }
-
-        .guide-item {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            margin-bottom: 25px;
-        }
-
-        .guide-number {
-            width: 35px;
-            height: 35px;
-            background: var(--gradasi);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: white;
-            flex-shrink: 0;
-            font-size: 0.9rem;
-            box-shadow: 0 5px 15px -5px rgba(16, 185, 129, 0.4);
-        }
-
-        .guide-text h6 { font-weight: 700; color: var(--text-main); margin-bottom: 4px; font-size: 0.95rem; }
-        .guide-text p { font-size: 0.85rem; color: var(--text-muted); margin: 0; line-height: 1.5; }
-
-        @media (max-width: 992px) {
-            .container-main { grid-template-columns: 1fr; }
-            body { padding-top: 2vh; }
-        }
+        .book-grid::-webkit-scrollbar { width: 5px; }
+        .book-grid::-webkit-scrollbar-thumb { background: var(--garis); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="latar-animasi"></div>
-    <div id="particles-container"></div>
+    <div class="latar-animasi" id="particles-container"></div>
 
-    <div class="container-main">
-        <div class="hero-content">
-            <div class="header-status-wrapper d-flex gap-3 mb-4">
-                <div class="chip-status" style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 10px 20px; border-radius: 100px; font-weight: 800; font-size: 0.75rem; border: 1px solid rgba(16, 185, 129, 0.3);">
-                    <i class="bi bi-arrow-left-right me-2"></i>MENU PENGEMBALIAN
-                </div>
-            </div>
+    <div class="form-wrapper">
+        <div class="glass-card">
+            <header class="card-header-luxe">
+                <h2><i class="bi bi-journal-plus me-2"></i>Pinjam Buku</h2>
+                <p style="color: var(--teks-muted); font-size: 0.85rem; margin: 5px 0 0 5px;">Silahkan lengkapi formulir di bawah ini</p>
+            </header>
 
-            <h1 class="title-huge">Buku <span>Kembali</span><br>Akses Terbuka.</h1>
-            <p class="subtitle" style="color: var(--text-muted); opacity: 0.8;">Validasi pengembalian koleksi secara mandiri dengan verifikasi sistem terpadu.</p>
-
-            <div class="book-card-mini" style="background: var(--card-glass); border: 1px solid var(--border-bright); border-radius: 35px; padding: 2rem;">
-                <label style="color: var(--accent-emerald); font-weight: 800; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; display: block;">Pinjaman Saat Ini</label>
-
-                @forelse($bukuDipinjam ?? [] as $item)
-                    <div class="status-history-item mb-3">
-                        <div class="d-flex align-items-start gap-3">
-                            <div style="width: 55px; height: 75px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: rgba(255,255,255,0.05); border: 1px solid var(--border-bright);">
-                                <img src="{{ asset('storage/covers/' . $item->buku->cover) }}"
-                                     style="width: 100%; height: 100%; object-fit: cover;"
-                                     alt="{{ $item->buku->judul }}"
-                                     onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode($item->buku->judul) }}&background=10b981&color=fff&size=128';">
-                            </div>
-
-                            <div class="flex-grow-1">
-                                <div class="d-flex align-items-center justify-content-between mb-1">
-                                    <span style="color: var(--text-main); font-weight: 800; font-size: 1rem;">{{ $item->buku->judul }}</span>
-                                    @if(isset($item->tanggal_kembali) && now()->greaterThan($item->tanggal_kembali))
-                                        <span style="color: var(--accent-danger); font-size: 0.65rem; font-weight: 800; background: rgba(239, 68, 68, 0.1); padding: 2px 8px; border-radius: 4px;">TERLAMBAT</span>
-                                    @endif
-                                </div>
-                                <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 5px;">
-                                    Batas: <span style="color: var(--text-main);" class="fw-bold">{{ isset($item->tanggal_kembali) ? \Carbon\Carbon::parse($item->tanggal_kembali)->format('d M Y') : '-' }}</span>
-                                </div>
-
-                                @if(!empty($item->catatan) && $item->catatan != '-')
-                                    <div class="note-bubble">
-                                        <i class="bi bi-chat-square-quote-fill"></i>
-                                        <div>
-                                            <span class="note-label">Catatan Guru</span>
-                                            <p class="note-text">{{ $item->catatan }}</p>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="text-center py-3 text-muted" style="font-size: 0.85rem;">Antrian log kosong.</div>
-                @endforelse
-            </div>
-        </div>
-
-        <div class="control-area">
-            <div class="control-panel">
-                @php $menunggu = ($riwayat ?? collect())->where('status', 'Menunggu Verifikasi')->first(); @endphp
-                @if($menunggu)
-                    <div class="alert shadow-sm border-0 mb-4" style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--accent-blue) !important; border-radius: 18px;">
-                        <div class="d-flex gap-2 align-items-center">
-                            <i class="bi bi-info-circle-fill" style="color: var(--accent-blue);"></i>
-                            <div style="font-size: 0.75rem; color: var(--text-main); font-weight: 600;">
-                                <strong style="color: var(--accent-blue);">Instruksi:</strong> Serahkan buku fisik ke petugas SMEKDA.
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-                <div class="mb-4">
-                    <h5 class="fw-800 mb-1" style="color: var(--text-main);">Panel Pengembalian</h5>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">Status Pengembalian Anda:</p>
-                </div>
-
-                <div class="mb-4">
-                    @foreach(($riwayat ?? collect())->take(2) as $r)
-                        @php
-                            $statusRaw = $r->status ?? 'PROSES';
-                            $statusLow = strtolower($statusRaw);
-                            $adaCatatanTolak = !empty($r->catatan) && $r->catatan !== '-';
-                            $isSelesai = str_contains($statusLow, 'selesai') || str_contains($statusLow, 'kembali');
-                            $isTolak = str_contains($statusLow, 'tolak') || str_contains($statusLow, 'reject') || $adaCatatanTolak;
-                            $isDipinjam = ($statusLow === 'dipinjam') && !$isTolak;
-
-                            if ($isSelesai) {
-                                $statusColor = 'var(--accent-emerald)';
-                                $statusLabel = 'Berhasil Kembali';
-                                $iconClass = 'bi-check-circle-fill text-success';
-                            } elseif ($isTolak) {
-                                $statusColor = 'var(--accent-danger)';
-                                $statusLabel = 'Pengembalian Ditolak';
-                                $iconClass = 'bi-x-circle-fill text-danger';
-                            } elseif ($isDipinjam) {
-                                $statusColor = 'var(--accent-warning)';
-                                $statusLabel = 'Sedang Dipinjam';
-                                $iconClass = 'bi-book-half text-warning';
-                            } else {
-                                $statusColor = 'var(--accent-blue)';
-                                $statusLabel = 'Sedang Diverifikasi';
-                                $iconClass = 'bi-clock-history text-primary';
-                            }
-                        @endphp
-
-                        <div class="status-history-item">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex gap-3 align-items-center">
-                                    <i class="bi {{ $iconClass }} fs-5"></i>
-                                    <div>
-                                        <div style="color: var(--text-main); font-weight: 700; font-size: 0.9rem;">
-                                            {{ \Illuminate\Support\Str::limit($r->buku->judul ?? 'Buku', 20) }}
-                                        </div>
-                                        <div style="font-size: 0.75rem; font-weight: 600; color: <?= $statusColor ?>;">
-                                            {{ $statusLabel }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="badge-status {{ $isSelesai ? 'bg-success-alt' : ($isTolak ? 'bg-rejected' : 'bg-pending') }}">
-                                    {{ $isTolak ? 'DITOLAK' : $statusRaw }}
-                                </span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <hr style="border-color: var(--border-bright); margin: 1.5rem 0;">
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <label style="color: var(--accent-emerald); font-weight: 800; font-size: 0.7rem; margin: 0; display: block; letter-spacing: 1.5px; text-transform: uppercase;">PILIH BUKU UNTUK DIKEMBALIKAN:</label>
-                    <button type="button" class="btn p-0 btn-floating-info" data-bs-toggle="modal" data-bs-target="#modalProses">
-                        <i class="bi bi-info-circle me-1"></i> LIHAT PROSES PENGEMBALIAN
-                    </button>
-                </div>
-
-                <form action="{{ route('pengembalian.update', 0) }}" method="POST" id="returnForm">
+            <div class="card-body-luxe">
+                <form action="{{ route('pinjam.store') }}" method="POST">
                     @csrf
-                    @method('PUT')
-                    <input type="hidden" name="transaksi_id" id="selectedTransaksiId" required>
+                    
+                    <div class="section-tag">1. Identitas Anggota</div>
+                    <div class="field-group">
+                        <label>Nama Peminjam</label>
+                        <input type="text" class="custom-input readonly-mode" value="{{ auth()->user()->nama }}" readonly>
+                    </div>
 
-                    <div class="book-selector-grid">
-                        @foreach($bukuDipinjam ?? [] as $item)
-                            <div class="book-option" onclick="selectBook(this, '{{ $item->id }}')">
-                                <div class="check-badge" style="position: absolute; top: 5px; right: 5px; background: var(--accent-emerald); color: white; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 0.7rem; z-index: 2;">
-                                    <i class="bi bi-check-lg"></i>
-                                </div>
-                                <img src="{{ asset('storage/covers/' . $item->buku->cover) }}"
-                                     alt="{{ $item->buku->judul }}"
-                                     style="width: 100%; aspect-ratio: 3/4; object-fit: cover; opacity: 0.6; transition: 0.4s;"
-                                     onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode($item->buku->judul) }}&background=10b981&color=fff&size=128';">
-                                <div style="padding: 8px 5px; background: rgba(0,0,0,0.6); font-size: 0.65rem; color: white; text-align: center; font-weight: 700; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                                    {{ \Illuminate\Support\Str::limit($item->buku->judul, 12) }}
-                                </div>
-                            </div>
+                    <div class="section-tag">2. Pilih Koleksi Buku</div>
+                    <div class="search-container">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="searchBuku" class="custom-input" placeholder="Cari judul buku yang ingin dipinjam...">
+                    </div>
+
+                    <div class="book-grid" id="bookGrid">
+                        @foreach($bukus as $b)
+                        <div class="book-item {{ (request('buku_id') == $b->id || old('buku_id') == $b->id) ? 'selected' : '' }}" 
+                             data-id="{{ $b->id }}" 
+                             data-title="{{ strtolower($b->judul) }}">
+                            
+                            @php
+                                $pathCover = $b->cover;
+                                if ($pathCover && !str_contains($pathCover, 'covers/')) {
+                                    $pathCover = 'covers/' . $pathCover;
+                                }
+                            @endphp
+                            
+                            <img src="{{ $b->cover ? asset('storage/' . $pathCover) : 'https://via.placeholder.com/150x200?text=NO+COVER' }}" 
+                                 class="book-cover" alt="{{ $b->judul }}">
+                            <div class="book-title">{{ $b->judul }}</div>
+                        </div>
                         @endforeach
                     </div>
+                    
+                    <input type="hidden" name="buku_id" id="selected_buku_id" value="{{ old('buku_id', request('buku_id')) }}">
+                    @error('buku_id')
+                        <span class="error-msg"><i class="bi bi-exclamation-circle me-1"></i>Pilih minimal satu buku</span>
+                    @enderror
 
-                    <button type="submit" class="btn-luxe" id="submitBtn" disabled>
-                        AJUKAN PENGEMBALIAN <i class="bi bi-send-fill ms-2"></i>
+                    <div class="section-tag">3. Penjadwalan</div>
+                    <div class="row g-3">
+                        <div class="col-md-6 field-group">
+                            <label>Tanggal Pinjam</label>
+                            <input type="date" name="tgl_pinjam" id="tgl_pinjam" 
+                                   class="custom-input @error('tgl_pinjam') is-invalid @enderror" 
+                                   value="{{ old('tgl_pinjam', date('Y-m-d')) }}" 
+                                   required onchange="calculateReturnDate()">
+                            @error('tgl_pinjam')
+                                <span class="error-msg"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 field-group">
+                            <label>Estimasi Pengembalian (7 Hari)</label>
+                            <input type="date" id="tgl_kembali" class="custom-input readonly-mode" readonly>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-gradasi">
+                        <i class="bi bi-check-circle-fill me-2"></i>KONFIRMASI PINJAMAN
                     </button>
+                    <a href="{{ route('pinjam') }}" class="btn-batal">Kembali ke List</a>
                 </form>
-
-                <a href="{{ route('dashboard') }}" class="btn-ghost d-block text-center mt-4 text-decoration-none" style="color: var(--text-main); font-weight: 700; font-size: 0.85rem; opacity: 0.5; transition: 0.3s;">
-                    <i class="bi bi-chevron-left me-1"></i> Kembali ke Dashboard
-                </a>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="modalProses" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content modal-content-luxe border-0 shadow-lg animate__animated animate__fadeInUp">
-                <div class="modal-header border-0 p-4">
-                    <h5 class="modal-title fw-800" style="color: var(--text-main);">Prosedur Pengembalian</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body px-4 px-md-5 pb-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="guide-item">
-                                <div class="guide-number">1</div>
-                                <div class="guide-text">
-                                    <h6>Akses Akun</h6>
-                                    <p>Login menggunakan Email dan password yang sudah terdaftar.</p>
-                                </div>
-                            </div>
-                            <div class="guide-item">
-                                <div class="guide-number">2</div>
-                                <div class="guide-text">
-                                    <h6>Menu Pengembalian</h6>
-                                    <p>Masuk ke menu Pengembalian pada sidebar navigasi.</p>
-                                </div>
-                            </div>
-                            <div class="guide-item">
-                                <div class="guide-number">3</div>
-                                <div class="guide-text">
-                                    <h6>Ajukan Sistem</h6>
-                                    <p>Pilih buku dan klik tombol <strong>Ajukan Pengembalian</strong>.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="guide-item">
-                                <div class="guide-number">4</div>
-                                <div class="guide-text">
-                                    <h6>Status Verifikasi</h6>
-                                    <p>Status akan berubah menjadi <strong>Menunggu Verifikasi</strong>.</p>
-                                </div>
-                            </div>
-                            <div class="guide-item">
-                                <div class="guide-number">5</div>
-                                <div class="guide-text">
-                                    <h6>Penyerahan Fisik</h6>
-                                    <p>Serahkan buku fisik ke petugas untuk pengecekan kondisi & denda.</p>
-                                </div>
-                            </div>
-                            <div class="guide-item">
-                                <div class="guide-number">6</div>
-                                <div class="guide-text">
-                                    <h6>Validasi & Selesai</h6>
-                                    <p>Setelah divalidasi petugas, status akan berubah menjadi <strong>Selesai</strong>.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 p-4" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed var(--accent-warning); border-radius: 25px;">
-                        <div class="d-flex gap-3">
-                            <div style="background: var(--accent-warning); color: black; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
-                            </div>
-                            <div>
-                                <h6 class="text-warning fw-800 mb-1" style="font-size: 0.8rem; text-transform: uppercase;">Catatan Penting:</h6>
-                                <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0; line-height: 1.4;">Pengajuan di sistem belum dianggap selesai sebelum buku fisik diserahkan ke petugas perpustakaan.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const msgSuccess = "{{ session('success') }}";
-        const msgError = "{{ session('error') }}";
+        // --- SEARCH & SELECTION ---
+        const searchInput = document.getElementById('searchBuku');
+        const bookItems = document.querySelectorAll('.book-item');
+        const hiddenInput = document.getElementById('selected_buku_id');
 
-        const getThemeConfig = () => {
-            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-            return {
-                background: isLight ? '#ffffff' : 'rgba(15, 23, 42, 0.95)',
-                color: isLight ? '#1e293b' : '#ffffff',
-                confirmButtonColor: '#10b981',
-                backdrop: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(2, 6, 23, 0.7)',
-            };
-        };
-
-        if (msgSuccess) {
-            const config = getThemeConfig();
-            Swal.fire({
-                icon: 'success',
-                title: '<span style="font-weight:800; font-family:\'Plus Jakarta Sans\'">Berhasil!</span>',
-                html: `<span style="font-family:\'Plus Jakarta Sans\'; font-size: 0.9rem;">${msgSuccess}</span>`,
-                background: config.background, color: config.color,
-                confirmButtonColor: config.confirmButtonColor, backdrop: config.backdrop,
-                customClass: { popup: 'rounded-4 border-0 shadow-lg' }
+        searchInput.addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            bookItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                item.style.display = title.includes(filter) ? 'block' : 'none';
             });
+        });
+
+        bookItems.forEach(item => {
+            item.addEventListener('click', function() {
+                bookItems.forEach(i => i.classList.remove('selected'));
+                this.classList.add('selected');
+                hiddenInput.value = this.getAttribute('data-id');
+            });
+        });
+
+        // --- TANGGAL LOGIC ---
+        function calculateReturnDate() {
+            const pinjamInput = document.getElementById('tgl_pinjam');
+            const kembaliInput = document.getElementById('tgl_kembali');
+            if (pinjamInput.value) {
+                let date = new window.Date(pinjamInput.value);
+                date.setDate(date.getDate() + 7);
+                kembaliInput.value = date.toISOString().split('T')[0];
+            }
         }
 
-        if (msgError) {
-            const config = getThemeConfig();
-            Swal.fire({
-                icon: 'error',
-                title: '<span style="font-weight:800; font-family:\'Plus Jakarta Sans\'">Terjadi Kesalahan</span>',
-                html: `<span style="font-family:\'Plus Jakarta Sans\'; font-size: 0.9rem;">${msgError}</span>`,
-                background: config.background, color: config.color,
-                confirmButtonColor: '#ef4444', backdrop: config.backdrop,
-                customClass: { popup: 'rounded-4 border-0 shadow-lg' }
-            });
-        }
-
-        function selectBook(element, id) {
-            document.querySelectorAll('.book-option').forEach(opt => {
-                opt.style.borderColor = 'transparent';
-                opt.querySelector('img').style.opacity = '0.6';
-                opt.querySelector('.check-badge').style.display = 'none';
-                opt.style.transform = 'scale(1)';
-            });
-
-            element.style.borderColor = 'var(--accent-emerald)';
-            element.querySelector('img').style.opacity = '1';
-            element.querySelector('.check-badge').style.display = 'flex';
-            element.style.transform = 'scale(1.05)';
-
-            const hiddenInput = document.getElementById('selectedTransaksiId');
-            const form = document.getElementById('returnForm');
-            const btn = document.getElementById('submitBtn');
-
-            hiddenInput.value = id;
-            form.action = form.action.substring(0, form.action.lastIndexOf('/')) + '/' + id;
-            btn.disabled = false;
-        }
-
-        const particleContainer = document.getElementById('particles-container');
-        function createParticle() {
-            if(!particleContainer) return;
+        // --- ANIMASI PARTIKEL ---
+        const container = document.getElementById('particles-container');
+        for (let i = 0; i < 15; i++) {
             const p = document.createElement('div');
             p.className = 'partikel';
             p.style.left = Math.random() * 100 + 'vw';
-            const size = (Math.random() * 3 + 2) + 'px';
+            const size = Math.random() * 3 + 2 + 'px';
             p.style.width = size; p.style.height = size;
-            p.style.animationDuration = (Math.random() * 8 + 7) + 's';
-            particleContainer.appendChild(p);
-            setTimeout(() => { p.remove(); }, 15000);
+            p.style.animationDuration = Math.random() * 8 + 8 + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(p);
         }
-        setInterval(createParticle, 600);
+
+        window.onload = () => { calculateReturnDate(); };
     </script>
 </body>
 </html>

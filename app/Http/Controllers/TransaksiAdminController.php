@@ -55,26 +55,28 @@ class TransaksiAdminController extends Controller
         });
     }
 
-    public function reject($id)
+    public function reject(Request $request, $id) // Tambahkan Request
     {
         $transaksi = Transaksi::findOrFail($id);
         
-        return DB::transaction(function () use ($transaksi) {
+        return DB::transaction(function () use ($transaksi, $request) {
             $buku = Buku::find($transaksi->buku_id);
             
-            // LOGIKA: Jika status sebelumnya adalah 'Dipinjam' atau 'Menunggu Verifikasi',
-            // artinya stok di database sudah sempat dikurangi (-1).
-            // Maka saat DITOLAK, stok harus dikembalikan (+1).
+            // Jika status sebelumnya adalah 'Dipinjam' atau 'Menunggu Verifikasi',
+            // stok harus dikembalikan karena sebelumnya sudah terpotong.
             if (in_array($transaksi->status, ['Dipinjam', 'Menunggu Verifikasi'])) {
                 if ($buku) {
                     $buku->increment('stok');
                 }
             }
 
-            // Ubah status menjadi Ditolak
-            $transaksi->update(['status' => 'Ditolak']); 
+            // Ubah status menjadi Ditolak dan simpan CATATAN
+            $transaksi->update([
+                'status' => 'Ditolak',
+                'catatan' => $request->alasan_tolak // Pastikan di Form name-nya 'alasan_tolak'
+            ]); 
             
-            return redirect()->back()->with('info', 'Peminjaman telah ditolak dan stok buku telah dikembalikan ke rak.');
+            return redirect()->back()->with('info', 'Peminjaman telah ditolak dan catatan telah disimpan.');
         });
     }
 
@@ -107,14 +109,19 @@ class TransaksiAdminController extends Controller
     // TransaksiAdminController.php (Modifikasi Logic Reject untuk Pengembalian)
     public function rejectPengembalian($id, Request $request)
     {
+        // Validasi agar catatan tidak kosong jika ingin memberikan alasan
+        $request->validate([
+            'alasan_tolak' => 'required|string|max:255'
+        ]);
+
         $transaksi = Transaksi::findOrFail($id);
         
         $transaksi->update([
-            'status' => 'Ditolak',
-            'catatan' => $request->alasan_tolak // Contoh: "Buku rusak, harap lapor petugas"
+            'status' => 'Dipinjam', // Jika pengembalian ditolak, status balik ke 'Dipinjam' (belum selesai)
+            'catatan' => $request->alasan_tolak 
         ]);
 
-        return redirect()->back()->with('info', 'Permohonan pengembalian ditolak. Siswa harus memperbaikinya.');
+        return redirect()->back()->with('info', 'Permohonan pengembalian ditolak. Catatan: ' . $request->alasan_tolak);
     }
 
     public function update(Request $request, $id)
@@ -183,7 +190,7 @@ class TransaksiAdminController extends Controller
             ]);
 
             // Redirect ke menu pengembalian karena ini dari edit pengembalian
-            return redirect()->route('admin.transaksi.pengembalian')->with('success', 'Data pengembalian berhasil diupdate.');
+            return redirect()->route('admin.transaksi.peminjaman')->with('success', 'Data pengembalian berhasil diupdate.');
         });
     }
 

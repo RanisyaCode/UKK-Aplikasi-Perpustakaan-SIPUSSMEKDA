@@ -191,40 +191,50 @@
         z-index: 999998 !important;
         background-color: rgba(0, 0, 0, 0.6) !important;
     }
-/* 3. Desain Box Modal - Kita buat SOLID agar tidak tembus pandang/blur */
-.modal-content {
-    background-color: #1e293b !important; /* Warna gelap solid (Slate 800) */
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 24px !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9) !important;
-    color: white !important;
-    /* Matikan filter apapun yang mungkin diwarisi dari induk */
-    filter: none !important;
-    backdrop-filter: none !important; 
-}
+    .modal-content {
+        background-color: #1e293b !important; 
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 24px !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9) !important;
+        color: white !important;
+        filter: none !important;
+        backdrop-filter: none !important; 
+    }
 
-/* 4. Pastikan teks di dalam modal putih bersih (untuk Dark Mode) */
-.modal-body h5 {
-    color: #ffffff !important;
-    font-weight: 800 !important;
-}
+    .modal-body h5 {
+        color: #ffffff !important;
+        font-weight: 800 !important;
+    }
 
-.modal-body p {
-    color: #cbd5e1 !important; /* Warna abu terang agar enak dibaca */
-}
+    .modal-body p {
+        color: #cbd5e1 !important; 
+    }
 
-/* 5. Khusus jika kamu pakai Light Mode, gunakan ini */
-html[data-theme="light"] .modal-content {
-    background-color: #ffffff !important;
-    color: #0f172a !important;
-    border: 1px solid #e2e8f0 !important;
-}
-html[data-theme="light"] .modal-body h5 {
-    color: #0f172a !important;
-}
-html[data-theme="light"] .modal-body p {
-    color: #64748b !important;
-}
+    html[data-theme="light"] .modal-content {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+    html[data-theme="light"] .modal-body h5 {
+        color: #0f172a !important;
+    }
+    html[data-theme="light"] .modal-body p {
+        color: #64748b !important;
+    }
+
+    .input-alasan {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--garis);
+        border-radius: 12px;
+        color: white;
+        padding: 12px;
+        width: 100%;
+        outline: none;
+    }
+    html[data-theme="light"] .input-alasan {
+        background: #f1f5f9;
+        color: #0f172a;
+    }
 </style>
 
 <div class="admin-catalog">
@@ -246,12 +256,12 @@ html[data-theme="light"] .modal-body p {
             <div class="stat-card">
                 <div class="stat-icon" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;"><i class="bi bi-clock-history"></i></div>
                 <p style="color: var(--teks-muted)" class="small fw-700 mb-1">MENUNGGU</p>
-                <h3 class="fw-800 mb-0" style="color: var(--teks-utama)">{{ $peminjamans_admin->where('status', 'Menunggu Pinjam')->count() }}</h3>
+                <h3 class="fw-800 mb-0" style="color: var(--teks-utama)">{{ $count_pending }}</h3>
             </div>
             <div class="stat-card">
                 <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399;"><i class="bi bi-journal-check"></i></div>
                 <p style="color: var(--teks-muted)" class="small fw-700 mb-1">DIPINJAM</p>
-                <h3 class="fw-800 mb-0" style="color: var(--teks-utama)">{{ $peminjamans_admin->where('status', 'Dipinjam')->count() }}</h3>
+                <h3 class="fw-800 mb-0" style="color: var(--teks-utama)">{{ $count_dipinjam }}</h3>
             </div>
             <div class="stat-card">
                 <div class="stat-icon" style="background: rgba(239, 68, 68, 0.2); color: #f87171;"><i class="bi bi-journal-x"></i></div>
@@ -295,9 +305,9 @@ html[data-theme="light"] .modal-body p {
                                 <div class="fw-800 small" style="color: var(--teks-utama)">{{ date('d M Y', strtotime($p->tanggal_kembali)) }}</div>
                             </td>
                             <td class="text-center">
-                                <form action="{{ route('admin.transaksi.updateStatus', $p->id) }}" method="POST" class="m-0">
+                                <form id="formStatus{{ $p->id }}" action="{{ route('admin.transaksi.updateStatus', $p->id) }}" method="POST" class="m-0">
                                     @csrf @method('PATCH')
-                                    <select name="status" onchange="this.form.submit()" 
+                                    <select name="status" onchange="handleStatusChange(this, '{{ $p->id }}', '{{ $p->status }}')" 
                                         class="select-pill 
                                         @if($p->status == 'Menunggu Pinjam') bg-tunggu 
                                         @elseif($p->status == 'Dipinjam') bg-pinjam 
@@ -354,7 +364,7 @@ html[data-theme="light"] .modal-body p {
                             Ya, Hapus Sekarang
                         </button>
                     </form>
-                    <button type="button" class="btn btn-link-batal mt-2" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-link text-decoration-none text-muted fw-bold mt-2" data-bs-dismiss="modal">
                         BATALKAN
                     </button>
                 </div>
@@ -362,62 +372,90 @@ html[data-theme="light"] .modal-body p {
         </div>
     </div>
 </div>
+
+{{-- MODAL REJECT (BARU) --}}
+<div class="modal fade" id="modalReject{{ $p->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+            <div class="modal-body p-4">
+                <h5 class="mb-3">Alasan Penolakan</h5>
+                <form action="{{ route('admin.transaksi.reject', $p->id) }}" method="POST">
+                    @csrf
+                    <textarea name="alasan_tolak" class="input-alasan mb-3" rows="3" placeholder="Contoh: Stok buku rusak atau NIS tidak valid..." required></textarea>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger fw-bold py-2" style="border-radius: 12px;">Kirim Penolakan</button>
+                        <button type="button" class="btn btn-link text-muted fw-bold" onclick="cancelReject('{{ $p->id }}', '{{ $p->status }}')" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endforeach
 
 <script>
-    // 1. Ambil session dari Laravel
-   const msgSuccess = "{{ session('success') }}";
-    const msgError = "{{ session('error') }}";
+    // Fungsi untuk handle perubahan status
+    function handleStatusChange(selectElement, id, oldStatus) {
+        if (selectElement.value === 'Ditolak') {
+            const modalReject = new bootstrap.Modal(document.getElementById('modalReject' + id));
+            modalReject.show();
+        } else {
+            selectElement.form.submit();
+        }
+    }
 
-    // 2. Fungsi untuk mendeteksi mode saat ini
+    function cancelReject(id, oldStatus) {
+        const select = document.querySelector(`#formStatus${id} select`);
+        select.value = oldStatus;
+    }
+
+    const msgSuccess = "{{ session('success') }}";
+    const msgError = "{{ session('error') }}";
+    const msgInfo = "{{ session('info') }}";
+
     const getThemeConfig = () => {
         const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         return {
             background: isLight ? '#ffffff' : 'rgba(15, 23, 42, 0.95)',
             color: isLight ? '#1e293b' : '#ffffff',
-            confirmButtonColor: '#10b981', // Tetap Emerald agar ikonik
-            backdrop: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(2, 6, 23, 0.7)',
-            className: isLight ? 'border-light' : 'border-dark'
+            confirmButtonColor: '#10b981',
+            backdrop: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(2, 6, 23, 0.7)'
         };
     };
 
-    // 3. Eksekusi Alert Sukses
     if (msgSuccess) {
         const config = getThemeConfig();
         Swal.fire({
             icon: 'success',
-            title: '<span style="font-weight:800; font-family:\'Plus Jakarta Sans\'">Berhasil!</span>',
-            html: `<span style="font-family:\'Plus Jakarta Sans\'; font-size: 0.9rem;">${msgSuccess}</span>`,
+            title: 'Berhasil!',
+            text: msgSuccess,
             background: config.background,
             color: config.color,
-            confirmButtonColor: config.confirmButtonColor,
-            backdrop: config.backdrop,
-            showClass: {
-                popup: 'animate__animated animate__fadeInUp animate__faster'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutDown animate__faster'
-            },
-            customClass: {
-                popup: 'rounded-4 border-0 shadow-lg'
-            }
+            confirmButtonColor: config.confirmButtonColor
         });
     }
 
-    // 4. Eksekusi Alert Error
     if (msgError) {
         const config = getThemeConfig();
         Swal.fire({
             icon: 'error',
-            title: '<span style="font-weight:800; font-family:\'Plus Jakarta Sans\'">Terjadi Kesalahan</span>',
-            html: `<span style="font-family:\'Plus Jakarta Sans\'; font-size: 0.9rem;">${msgError}</span>`,
+            title: 'Gagal',
+            text: msgError,
             background: config.background,
             color: config.color,
-            confirmButtonColor: '#ef4444',
-            backdrop: config.backdrop,
-            customClass: {
-                popup: 'rounded-4 border-0 shadow-lg'
-            }
+            confirmButtonColor: '#ef4444'
+        });
+    }
+
+    if (msgInfo) {
+        const config = getThemeConfig();
+        Swal.fire({
+            icon: 'info',
+            title: 'Informasi',
+            text: msgInfo,
+            background: config.background,
+            color: config.color,
+            confirmButtonColor: '#0ea5e9'
         });
     }
     

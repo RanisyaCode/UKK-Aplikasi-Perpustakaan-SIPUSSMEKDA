@@ -14,7 +14,7 @@
 </script>
 
 <style>
-    /* MASTERPIECE THEME DYNAMIC */
+    /* FIX FINAL: jangan override layout desktop bawaan template */
     :root {
         --dynamic-bg: #020617;
         --dynamic-card: #0f172a;
@@ -25,170 +25,72 @@
     }
 
     [data-theme="light"] {
-        --dynamic-bg: #ffffff; 
+        --dynamic-bg: #ffffff;
         --dynamic-card: #ffffff;
         --dynamic-text: #0f172a;
         --kaca-header: rgba(255, 255, 255, 0.9);
         --garis-halus: rgba(15, 23, 42, 0.08);
     }
 
+    * { box-sizing: border-box; }
+    html, body { overflow-x: hidden; }
+
     body {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: var(--dynamic-bg) !important;
         color: var(--dynamic-text) !important;
-        transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .border-role-admin { border: 2px solid #ef4444 !important; }
-    .border-role-siswa { border: 2px solid #10b981 !important; }
-    .border-role-default { border: 2px solid #94a3b8 !important; }
+    /* biarkan desktop ikut ukuran asli template */
+    .nxl-navigation {
+        background: var(--dynamic-card) !important;
+    }
 
-    /* HEADER ADJUSTMENT */
     .nxl-header {
         background: var(--kaca-header) !important;
         backdrop-filter: blur(15px) !important;
         border-bottom: 1px solid var(--garis-halus) !important;
-        height: 75px !important;
-        transition: background 0.3s ease;
-        z-index: 2000 !important; /* Menaikkan z-index header agar profil bisa diklik */
     }
 
-    /* NAVIGATION / SIDEBAR FIX */
-    .nxl-navigation {
-        z-index: 1010 !important;
-        background: var(--dynamic-card) !important;
-    }
-
-    /* FIX REDUP: Mematikan overlay yang mengganggu klik dan kecerahan */
-    .nxl-menu-overlay {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-    }
-
-    .header-wrapper {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        overflow: visible !important;
-    }
-
-    #theme-icon {
-        font-size: 1.2rem !important;
-        display: inline-block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-
-    .nxl-head-link i {
-        color: #94a3b8 !important;
-        transition: 0.3s;
-    }
-    .nxl-head-link:hover i {
-        color: #10b981 !important;
-        transform: scale(1.1);
-    }
-
-    .nxl-user-dropdown, .card {
-        background: var(--dynamic-card) !important;
-        border: 1px solid var(--garis-halus) !important;
-        color: var(--dynamic-text) !important;
-    }
-
-    .dropdown.nxl-h-item {
-        position: relative;
-        display: flex;
-        align-items: center;
-        height: 100%;
-    }
-
-    /* Dropdown user harus sangat tinggi agar tidak tertutup konten */
-    .nxl-user-dropdown {
-        border-radius: 20px !important;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.4) !important;
-        padding: 15px !important;
-        margin-top: 0 !important;
-        min-width: 230px;
-        position: absolute !important;
-        top: 70px !important;
-        right: 0 !important;
-        z-index: 99999 !important; 
-    }
-
-    @media (max-width: 1024px) {
-        .nxl-container {
-            z-index: 1 !important;
-            position: relative;
-        }
-        .nxl-user-dropdown {
-            right: 0 !important;
-            left: auto !important;
-            transform: translateX(0) !important;
-        }
-        .nxl-navigation {
-            z-index: 3000 !important; /* Di mobile sidebar harus di atas header */
-        }
-        .nxl-header {
-            z-index: 2500 !important;
-        }
-    }
-
-    .nxl-user-dropdown::before {
-        content: "";
-        position: absolute;
-        top: -15px;
-        left: 0;
-        width: 100%;
-        height: 15px;
-        background: transparent;
-    }
-
-    .dropdown-item {
-        border-radius: 12px !important;
-        padding: 10px 15px !important;
-        color: #94a3b8 !important;
-        transition: 0.3s;
-        display: flex;
-        align-items: center;
-    }
-
-    .dropdown-item i {
-        font-size: 1.1rem;
-        margin-right: 10px;
-    }
-
-    .dropdown-item:hover {
-        background: rgba(16, 185, 129, 0.1) !important;
-        color: #10b981 !important;
-    }
-
-    .dropdown-divider {
-        border-top: 1px solid var(--garis-halus) !important;
-        margin: 10px 0;
-    }
-
-    .nxl-container, .nxl-content {
+    .nxl-content,
+    .nxl-container {
         background-color: var(--dynamic-bg) !important;
     }
 
-    .page-header h5 {
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: var(--dynamic-text) !important;
+    .nxl-content {
+        overflow-x: auto;
     }
 
-    .breadcrumb-item a { color: #10b981 !important; text-decoration: none; }
-    .breadcrumb-item.active { color: #64748b !important; }
+    .nxl-menu-overlay {
+        display: none !important;
+    }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--dynamic-bg); }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    /* HANYA mobile yang dioverride */
+    @media (max-width: 1024px) {
+        .nxl-navigation {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 3000 !important;
+            transform: translateX(-100%);
+            transition: transform .3s ease;
+        }
 
-    .modal { z-index: 200000 !important; }
-    .modal-dialog { position: relative; z-index: 200001 !important; }
-    .modal-content { position: relative; z-index: 200002 !important; }
-    .modal-backdrop { z-index: 199999 !important; }
+        body.nxl-mobile-menu-opened .nxl-navigation {
+            transform: translateX(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .nxl-content { padding: .75rem; }
+    }
+
+    @media (max-width: 576px) {
+        .nxl-content { padding: .5rem; }
+    }
 </style>
+
 
 <body>
     @include('layouts.sidebar')
