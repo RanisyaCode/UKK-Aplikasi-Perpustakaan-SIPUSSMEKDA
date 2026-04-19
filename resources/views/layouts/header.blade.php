@@ -25,9 +25,6 @@
     </script>
 
     <style>
-        /* ================================================================
-           MASTERPIECE DYNAMIC THEME (DARK & LIGHT)
-        ================================================================ */
         :root {
             --bg-main: #020617;
             --bg-soft: #0f172a;
@@ -45,7 +42,6 @@
             --text-muted: #64748b;
         }
 
-        /* 1. Body & Container Reset */
         body, .nxl-container, .nxl-content {
             background-color: var(--bg-main) !important;
             color: var(--text-main) !important;
@@ -53,7 +49,6 @@
             min-height: 100vh;
         }
 
-        /* 2. Header Masterpiece Override */
         .nxl-header, .nxl-header .header-wrapper {
             background-color: var(--bg-main) !important;
             border-bottom: 1px solid var(--border-color) !important;
@@ -69,7 +64,6 @@
             color: var(--emerald) !important;
         }
 
-        /* 3. Dropdown & Card Styling */
         .card, .nxl-header .dropdown-menu, .nxl-user-dropdown {
             background-color: var(--bg-soft) !important;
             border: 1px solid var(--border-color) !important;
@@ -86,14 +80,12 @@
             color: var(--emerald) !important;
         }
 
-        /* 4. Search Bar & Form */
         .nxl-header .nxl-search-form input {
             background: rgba(255, 255, 255, 0.05) !important;
             border: 1px solid var(--border-color) !important;
             color: var(--text-main) !important;
         }
 
-        /* 5. Table Styling - Responsive Fix */
         .table-responsive {
             border: none !important;
         }
@@ -107,14 +99,12 @@
         }
         .table td { border-top: 1px solid var(--border-color) !important; }
 
-        /* 6. Breadcrumb & Page Header */
         .page-header {
             background-color: var(--bg-main) !important;
             border-bottom: 1px solid var(--border-color) !important;
             padding: 1.5rem 1rem;
         }
 
-        /* 7. Footer Dashboard */
         footer.footer {
             background-color: var(--bg-main) !important;
             border-top: 1px solid var(--border-color) !important;
@@ -122,7 +112,6 @@
             padding: 20px;
         }
 
-        /* Logo Gradasi Masterpiece */
         .logo-title { 
             font-weight: 800; 
             background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); 
@@ -131,16 +120,12 @@
             -webkit-text-fill-color: transparent; 
         }
 
-        /* ================================================================
-           RESPONSIVE FIXES (MEDIA QUERIES)
-        ================================================================ */
-        
         @media (max-width: 991.98px) {
             .nxl-header .header-wrapper {
                 padding: 0 15px;
             }
             .nxl-header .nxl-search-form {
-                display: none; /* Sembunyikan search di mobile jika sempit */
+                display: none; 
             }
         }
 

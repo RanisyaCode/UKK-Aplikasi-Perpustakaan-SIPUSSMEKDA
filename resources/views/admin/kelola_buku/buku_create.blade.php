@@ -5,9 +5,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
 <style>
-    /* ==========================================================================
-       DYNAMIC THEME ENGINE
-       ========================================================================== */
     .admin-catalog {
         --bg-body: #020617;
         --bg-radial: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
@@ -132,20 +129,17 @@
         to { transform: translateY(-10vh); opacity: 0; }
     }
 
-    /* Menyesuaikan Select Box & Dropdown Options */
     .form-select {
         background-color: var(--kaca) !important;
         color: var(--teks-utama) !important;
         border-color: var(--garis) !important;
     }
 
-    /* Mengubah warna dropdown (isi pilihan) */
     .form-select option {
-        background-color: var(--bg-body); /* Mengikuti warna background tema */
+        background-color: var(--bg-body); 
         color: var(--teks-utama);
     }
 
-    /* Fokus state */
     .form-select:focus {
         border-color: var(--emerald) !important;
         box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25) !important;

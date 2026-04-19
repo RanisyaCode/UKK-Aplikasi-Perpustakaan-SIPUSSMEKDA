@@ -61,7 +61,6 @@
         flex: 1;
     }
 
-    /* SISWA SEARCH BOX */
     .search-input-wrapper {
         position: relative;
         margin-bottom: 0.5rem;
@@ -85,7 +84,6 @@
         color: #10b981;
     }
 
-    /* BUKU GRID SYSTEM */
     .buku-container {
         background: var(--input-bg);
         border-radius: 20px;
@@ -124,7 +122,7 @@
     }
 
     .buku-card.selected::before {
-        content: "\F26E"; /* Bootstrap check-circle */
+        content: "\F26E"; 
         font-family: "bootstrap-icons";
         position: absolute;
         top: 8px;
@@ -273,7 +271,6 @@
         transform: translateX(-5px);
     }
 
-    /* Penyesuaian agar posisi tombol sejajar */
     .gap-3 {
         gap: 1rem !important;
     }
@@ -363,7 +360,7 @@
             return {
                 background: isLight ? '#ffffff' : 'rgba(15, 23, 42, 0.95)',
                 color: isLight ? '#0f172a' : '#ffffff',
-                confirmButtonColor: '#10b981', // Tetap Emerald agar konsisten
+                confirmButtonColor: '#10b981', 
                 backdrop: isLight ? 'rgba(0,0,0,0.2)' : 'rgba(2, 6, 23, 0.7)',
             };
         };

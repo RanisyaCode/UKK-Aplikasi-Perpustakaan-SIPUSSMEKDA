@@ -7,9 +7,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <style>
-    /* ==========================================================================
-        DYNAMIC THEME ENGINE
-       ========================================================================== */
     .admin-catalog {
         --bg-body: #020617;
         --kaca: rgba(255, 255, 255, 0.03);
@@ -175,9 +172,6 @@
         to { transform: translateY(-10vh); opacity: 0; }
     }
 
-    /* ==========================================================================
-   THE "FIX EVERYTHING" MODAL CSS
-   ========================================================================== */
    .modal {
         z-index: 999999 !important;
     }

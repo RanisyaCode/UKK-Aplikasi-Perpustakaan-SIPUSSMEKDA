@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TransaksiSiswaController extends Controller
 {
-    // Status yang dianggap masih memegang kuota pinjaman
     protected $statusAktif = ['Menunggu Pinjam', 'Dipinjam', 'Menunggu Verifikasi'];
 
     public function pinjam(Request $request)
@@ -19,13 +18,11 @@ class TransaksiSiswaController extends Controller
         $bukuId = $request->query('buku_id');
         $buku = Buku::find($bukuId);
 
-        // Ambil daftar transaksi yang statusnya masih aktif
         $transaksiAktif = Transaksi::with('buku')
                             ->where('user_id', $userId)
                             ->whereIn('status', $this->statusAktif)
                             ->get();
 
-        // AMBIL DATA TERBARU: Ini yang akan menampilkan kolom 'catatan'
         $transaksiTerakhir = Transaksi::where('user_id', $userId)
                             ->latest()
                             ->first();
@@ -35,10 +32,8 @@ class TransaksiSiswaController extends Controller
         $title1 = "Transaksi Saya";
         $title2 = "Pinjam Buku";
 
-        // Tambahan untuk modal edit: ambil semua buku yang tersedia
         $semuaBuku = Buku::where('stok', '>', 0)->get();
 
-        // Kirim semua variabel ke view
         return view('siswa.pinjam-buku.pinjam', compact(
             'buku', 'title1', 'title2', 'transaksiAktif', 
             'transaksiTerakhir', 'jumlahAktif', 'semuaBuku'
@@ -47,21 +42,17 @@ class TransaksiSiswaController extends Controller
 
     public function edit($id)
     {
-        // Cari data transaksi berdasarkan ID
         $transaksi = Transaksi::with('buku')->findOrFail($id);
 
-        // Keamanan: Pastikan hanya pemilik transaksi yang bisa edit dan statusnya masih 'Menunggu Pinjam'
         if ($transaksi->user_id !== Auth::id() || $transaksi->status !== 'Menunggu Pinjam') {
             return redirect()->route('pinjam')->with('error', 'Akses ditolak atau data tidak bisa diubah.');
         }
 
-        // Ambil daftar semua buku untuk pilihan di grid
         $bukus = Buku::where('stok', '>', 0)->get();
         
         $title1 = "Edit Transaksi";
         $title2 = "Perbarui Peminjaman";
 
-        // Arahkan ke file baru yang kamu buat tadi
         return view('siswa.pinjam-buku.pinjam-edit', compact('transaksi', 'bukus', 'title1', 'title2'));
     }
 
@@ -95,7 +86,6 @@ class TransaksiSiswaController extends Controller
     
     public function store(Request $request)
     {
-        // Validasi hanya buku, tanggal pinjam, dan catatan
         $request->validate([
             'buku_id'     => 'required|exists:bukus,id',
             'tgl_pinjam'  => 'required|date|after_or_equal:today',
@@ -113,12 +103,10 @@ class TransaksiSiswaController extends Controller
         $userId = Auth::id();
         $buku = Buku::findOrFail($request->buku_id);
 
-        // Cek stok buku
         if ($buku->stok <= 0) {
             return redirect()->back()->with('error', 'Maaf, stok buku ini sedang kosong.');
         }
 
-        // Cek kuota aktif (Maks 3)
         $jumlahAktif = Transaksi::where('user_id', $userId)
                         ->whereIn('status', $this->statusAktif)
                         ->count();
@@ -127,7 +115,6 @@ class TransaksiSiswaController extends Controller
             return redirect()->back()->with('error', 'Gagal! Kamu sudah mencapai batas maksimal 3 peminjaman.');
         }
 
-        // OTOMATISASI: Pinjam tgl 9, otomatis kembali tgl 16
         $tglPinjam = Carbon::parse($request->tgl_pinjam);
         $tglKembaliOtomatis = $tglPinjam->copy()->addDays(7);
 
@@ -135,7 +122,7 @@ class TransaksiSiswaController extends Controller
             'user_id'         => $userId,
             'buku_id'         => $request->buku_id,
             'tanggal_pinjam'  => $tglPinjam, 
-            'tanggal_kembali' => $tglKembaliOtomatis, // Masuk otomatis ke DB
+            'tanggal_kembali' => $tglKembaliOtomatis,
             'catatan'         => $request->catatan,
             'status'          => 'Menunggu Pinjam', 
         ]);
@@ -144,9 +131,6 @@ class TransaksiSiswaController extends Controller
             ->with('success', 'Pengajuan berhasil! Tanggal kembali otomatis diset: ' . $tglKembaliOtomatis->format('d-m-Y'));
     }
 
-    /**
-     * FITUR BARU: Update pengajuan pinjaman sebelum disetujui admin
-     */
     public function updatePinjam(Request $request, $id)
     {
         $transaksi = Transaksi::findOrFail($id);
@@ -171,18 +155,13 @@ class TransaksiSiswaController extends Controller
             'catatan'         => $request->catatan
         ]);
 
-        // REDIRECT: Balik ke halaman utama peminjaman (terminal)
         return redirect()->route('pinjam')->with('success', 'Perubahan berhasil disimpan!');
     }
 
-    /**
-     * FITUR BARU: Menghapus/Membatalkan pengajuan
-     */
     public function destroy($id)
     {
         $transaksi = Transaksi::findOrFail($id);
 
-        // Hanya boleh hapus jika status masih 'Menunggu Pinjam'
         if ($transaksi->status !== 'Menunggu Pinjam' || $transaksi->user_id !== Auth::id()) {
             return redirect()->back()->with('error', 'Pengajuan tidak dapat dibatalkan.');
         }
@@ -197,14 +176,13 @@ class TransaksiSiswaController extends Controller
         
         $riwayat = Transaksi::with('buku')
                     ->where('user_id', $userId)
-                    ->orderByDesc('updated_at') // Urutkan berdasarkan perubahan terbaru
+                    ->orderByDesc('updated_at') 
                     ->get();
 
-        // Ambil buku yang perlu tindakan (Dipinjam atau diperbaiki karena Ditolak)
         $bukuDipinjam = Transaksi::with('buku')
                     ->where('user_id', $userId)
                     ->whereIn('status', ['Dipinjam', 'Menunggu Verifikasi', 'Ditolak'])
-                    ->orderByRaw("FIELD(status, 'Ditolak', 'Dipinjam', 'Menunggu Verifikasi')") // Prioritaskan yang ditolak di atas
+                    ->orderByRaw("FIELD(status, 'Ditolak', 'Dipinjam', 'Menunggu Verifikasi')") 
                     ->get();
 
         $title1 = "Transaksi Saya";
@@ -217,10 +195,8 @@ class TransaksiSiswaController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
         
-        // Pastikan ini milik siswa yang login
         if($transaksi->user_id !== Auth::id()) abort(403);
         
-        // Siswa hanya bisa mengajukan pengembalian jika statusnya 'Dipinjam' atau 'Ditolak' (ajukan ulang)
         $statusBolehKembali = ['Dipinjam', 'Ditolak'];
 
         if(!in_array($transaksi->status, $statusBolehKembali)) {
@@ -229,10 +205,9 @@ class TransaksiSiswaController extends Controller
 
         $transaksi->update([
             'status' => 'Menunggu Verifikasi',
-            'catatan' => '-' // Reset catatan jika sebelumnya ada alasan penolakan dari admin
+            'catatan' => '-' 
         ]);
 
-        // Pesan instruksi setelah klik tombol
         return redirect()->route('pengembalian')->with('success', 'Permohonan terkirim! Silakan serahkan buku ke petugas perpustakaan untuk verifikasi fisik.');
     }
 }

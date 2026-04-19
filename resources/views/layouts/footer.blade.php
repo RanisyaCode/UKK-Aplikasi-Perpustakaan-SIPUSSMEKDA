@@ -1,6 +1,6 @@
 <style>
         .nxl-content {
-        min-height: calc(100vh - 150px); /* 100vh = tinggi layar, 150px kira-kira tinggi header+footer */
+        min-height: calc(100vh - 150px); 
         display: flex;
         flex-direction: column;
     }
@@ -11,7 +11,6 @@
             <p class="fs-11 text-muted fw-medium text-uppercase mb-0">
                 <span>Copyright ©</span>
                 <script>
-                    // Mengambil tahun secara otomatis agar tidak perlu update manual setiap tahun
                     document.write(new Date().getFullYear());
                 </script>
                 <span class="ms-1">SIPUS SMEKDA</span>

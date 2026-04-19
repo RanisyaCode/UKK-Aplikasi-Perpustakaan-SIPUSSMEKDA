@@ -7,9 +7,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <style>
-    /* ==========================================================================
-        DYNAMIC THEME ENGINE
-       ========================================================================== */
     .main-content {
         --bg-body: #020617; 
         --kaca: rgba(15, 23, 42, 0.7);
@@ -40,9 +37,6 @@
         --modal-bg: #ffffff;
     }
 
-    /* ==========================================================================
-        FIX MODAL VISIBILITY (SOLID WHITE)
-       ========================================================================== */
     .modal-backdrop { 
         z-index: 1050 !important; 
         backdrop-filter: blur(12px) !important;
@@ -96,9 +90,6 @@
         border: 1px solid #e2e8f0 !important;
     }
 
-    /* ==========================================================================
-        UI COMPONENTS
-       ========================================================================== */
     .page-title { 
         font-weight: 800; 
         letter-spacing: -1.5px; 

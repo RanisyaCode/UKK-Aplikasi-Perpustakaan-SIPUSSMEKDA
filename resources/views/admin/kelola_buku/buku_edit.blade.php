@@ -5,11 +5,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
 <style>
-    /* ==========================================================================
-       DYNAMIC THEME ENGINE - Paksa Override
-       ========================================================================== */
-    
-    /* Default Dark (Desain Mewah Kamu) */
+
     .admin-catalog {
         --bg-body: #020617;
         --card-bg: rgba(255, 255, 255, 0.03);
@@ -22,7 +18,6 @@
         --gradasi: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
     }
 
-    /* Paksa Light Mode jika html[data-theme="light"] aktif */
     html[data-theme="light"] .admin-catalog {
         --bg-body: #f8fafc;
         --card-bg: #ffffff;
@@ -32,9 +27,6 @@
         --garis: rgba(15, 23, 42, 0.08);
     }
 
-    /* ==========================================================================
-       IMPLEMENTASI CSS (Tetap Sesuai Design Asli)
-       ========================================================================== */
     .admin-catalog {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: var(--bg-body);
@@ -87,7 +79,6 @@
         padding: 12px 15px;
     }
 
-    /* Modifikasi validasi merah */
     .is-invalid {
         border-color: #ef4444 !important;
     }

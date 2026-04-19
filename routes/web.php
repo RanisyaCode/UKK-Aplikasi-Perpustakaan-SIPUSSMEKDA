@@ -12,11 +12,7 @@ use App\Models\Buku;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| GUEST (BELUM LOGIN)
-|--------------------------------------------------------------------------
-*/
+// tampilan untuk semua user yang belum login
 Route::middleware('guest')->group(function () {
     Route::get('/', function () {
         $semua_buku = Buku::latest()->take(6)->get(); 
@@ -38,11 +34,7 @@ Route::post('logout', function () {
     return redirect()->route('login')->with('success', 'Berhasil logout');
 })->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| WAJIB LOGIN - ADMIN
-|--------------------------------------------------------------------------
-*/
+// tampilan untuk admin
 Route::middleware('checkLogin:Admin')->group(function () {
     Route::get('dashboardadmin', [DashboardController::class, 'index'])->name('dashboardadmin');
     // Menu Admin - Buku
@@ -78,11 +70,7 @@ Route::middleware('checkLogin:Admin')->group(function () {
     });
 }); // <--- Penutup Grup Admin
 
-/*
-|--------------------------------------------------------------------------
-| WAJIB LOGIN - SISWA
-|--------------------------------------------------------------------------
-*/
+// tampilan untuk siswa
 Route::middleware('checkLogin:Siswa')->group(function () {
     Route::get('/dashboard', [PerpustakaanSiswaController::class, 'index'])->name('dashboard');
     Route::get('/buku/{id}', [PerpustakaanSiswaController::class, 'detailBuku'])->name('siswa.buku.detail');
@@ -97,13 +85,9 @@ Route::middleware('checkLogin:Siswa')->group(function () {
         Route::get('pengembalian', [TransaksiSiswaController::class, 'index'])->name('pengembalian');
         Route::put('pengembalian/{id}', [TransaksiSiswaController::class, 'update'])->name('pengembalian.update');
     });
-}); // <--- Penutup Grup Siswa
+}); 
 
-/*
-|--------------------------------------------------------------------------
-| PROFILE (UNTUK SEMUA ROLE)
-|--------------------------------------------------------------------------
-*/
+// tampilan untuk semua user yang sudah login (admin & siswa)
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');

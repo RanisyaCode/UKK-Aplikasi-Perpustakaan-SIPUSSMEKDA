@@ -8,7 +8,6 @@
 
 <style>
     :root {
-        /* Default Dark Mode Variables */
         --bg-deep: #020617;
         --card-bg: rgba(15, 23, 42, 0.8);
         --text-main: #f8fafc;
@@ -16,14 +15,12 @@
         --border-thin: rgba(255, 255, 255, 0.06);
         --btn-ghost: rgba(255,255,255,0.03);
         
-        /* Constant Accents */
         --accent-emerald: #10b981;
         --accent-blue: #3b82f6;
         --accent-amber: #f59e0b;
         --accent-rose: #f43f5e;
     }
 
-    /* Light Mode Overrides */
     [data-theme="light"] {
         --bg-deep: #f1f5f9;
         --card-bg: rgba(255, 255, 255, 0.9);
@@ -33,7 +30,6 @@
         --btn-ghost: rgba(0, 0, 0, 0.02);
     }
 
-    /* Layout Reset */
     .content-wrapper, .content, .container-fluid { 
         background: var(--bg-deep) !important; 
         border: none !important; 
@@ -46,7 +42,6 @@
         padding: 2rem;
     }
 
-    /* Top Navigation Style Header */
     .glass-header {
         display: flex;
         justify-content: space-between;
@@ -64,7 +59,6 @@
         letter-spacing: -1px;
     }
 
-    /* Bento Grid Card */
     .bento-surface {
         background: var(--card-bg);
         backdrop-filter: blur(24px);
@@ -80,7 +74,6 @@
         box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     }
 
-    /* Stats Styling */
     .label-caps { 
         font-size: 0.7rem; 
         font-weight: 700; 
@@ -97,7 +90,6 @@
         color: var(--text-main);
     }
 
-    /* Modern Status Badge */
     .status-pill {
         font-size: 0.65rem;
         font-weight: 700;
@@ -114,7 +106,6 @@
     .status-pill.ditolak { background: rgba(244, 63, 94, 0.1); color: #e11d48; border: 1px solid rgba(244, 63, 94, 0.2); }
     .status-pill.kembali { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
 
-    /* Custom Action Tiles */
     .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     
     .tile-btn {
@@ -132,7 +123,6 @@
     .tile-btn:hover i, .tile-btn:hover span { color: #fff !important; }
     .tile-btn span { font-size: 0.75rem; font-weight: 700; color: var(--text-main); }
 
-    /* Transaction Feed */
     .feed-scroll { max-height: 500px; overflow-y: auto; overflow-x: hidden; padding-right: 10px; }
     .feed-scroll::-webkit-scrollbar { width: 4px; }
     .feed-scroll::-webkit-scrollbar-thumb { background: var(--border-thin); border-radius: 10px; }
@@ -160,14 +150,14 @@
     .glass-header {
         display: flex;
         justify-content: space-between;
-        align-items: center; /* Menjaga teks kiri dan jam kanan sejajar tengah */
+        align-items: center; 
         margin-bottom: 2.5rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid var(--border-thin); /* Opsional: garis tipis pemisah */
+        border-bottom: 1px solid var(--border-thin); 
     }
 
     #real-clock {
-        line-height: 1; /* Biar gak ada space kosong berlebih */
+        line-height: 1; 
         transition: color 0.3s ease;
     }
 

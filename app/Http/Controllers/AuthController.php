@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 class AuthController extends Controller
 {
-    // =========================
-    // REGISTER
-    // =========================
     public function register()
     {
         return view('auth.register');
@@ -19,7 +16,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'nama' => ['required', 'string', 'min:3', 'max:50'],
-            'nis'  => ['required', 'numeric', 'digits:9', 'unique:users,nis'], // Wajib 9 digit angka
+            'nis'  => ['required', 'numeric', 'digits:9', 'unique:users,nis'], 
             'jenis_kelamin' => ['required', 'in:Laki-laki,Perempuan'],
             'email' => ['required', 'email', 'unique:users,email'],
             'no_telepon' => ['required', 'numeric', 'digits_between:10,15'],
@@ -43,7 +40,6 @@ class AuthController extends Controller
             'kelas.required'     => 'Kelas harus diisi',
         ]);
 
-        // Simpan data user baru
         $user = User::create([
             'nama'          => trim($request->nama),
             'nis'           => $request->nis,
@@ -54,10 +50,9 @@ class AuthController extends Controller
             'role'          => 'Siswa',
             'kelas'         => $request->kelas,
             'aksi'          => true,
-            'theme'         => 'dark', // Tambahkan ini sebagai default awal
+            'theme'         => 'dark', 
         ]);
 
-        // Login otomatis setelah register
         Auth::login($user);
 
         return redirect()->route('dashboard')->with('success', 'Akun berhasil dibuat!');
@@ -69,7 +64,6 @@ class AuthController extends Controller
 
     public function process(Request $request)
     {
-        // 1. Validasi input
         $request->validate([
             'email'    => 'required|email',
             'password' => 'required|min:8',
@@ -80,19 +74,15 @@ class AuthController extends Controller
             'password.min'      => 'Password minimal 8 karakter',
         ]);
 
-        // 2. Ambil kredensial
         $credentials = $request->only('email', 'password');
 
-        // 3. Cek remember me
         $remember = $request->boolean('remember');
 
-        // 4. Proses login
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
 
-            // LOGIKA REDIRECT BERDASARKAN ROLE
             if ($user->role == 'Admin') {
                 return redirect()->route('dashboardadmin')->with('success', 'Selamat Datang Admin!');
             } else {
@@ -100,7 +90,6 @@ class AuthController extends Controller
             }
         }
 
-        // 7. Login gagal
         return back()
             ->withInput($request->only('email'))
             ->with('error', 'Email atau password salah');
@@ -108,7 +97,6 @@ class AuthController extends Controller
 
     public function updateTheme(Request $request)
     {
-        // Validasi input
         $request->validate([
             'theme' => 'required|in:light,dark'
         ]);

@@ -6,9 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-    /* ==========================================================================
-        DYNAMIC THEME ENGINE
-       ========================================================================== */
     .edit-container {
         --edit-bg: transparent;
         --card-bg: rgba(15, 23, 42, 0.7);
@@ -64,7 +61,6 @@
         z-index: -1;
     }
 
-    /* GRID KOLEKSI BUKU */
     .book-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));

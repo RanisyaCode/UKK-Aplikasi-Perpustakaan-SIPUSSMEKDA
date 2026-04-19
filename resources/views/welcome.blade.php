@@ -21,7 +21,7 @@
             --emerald: #10b981;
             --ocean: #0ea5e9;
             --gradasi: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
-            --btn-theme: #ffffff; /* Default Dark Mode icon color */
+            --btn-theme: #ffffff;
         }
 
         [data-theme="light"] {
@@ -31,7 +31,7 @@
             --teks-muted: #475569 !important;
             --kaca: rgba(15, 23, 42, 0.05);
             --garis: rgba(15, 23, 42, 0.1);
-            --btn-theme: #0f172a; /* Light Mode icon color */
+            --btn-theme: #0f172a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,13 +47,12 @@
 
         .latar-animasi { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        /* NAVBAR */
         .nav-utama {
             position: fixed; top: 0; width: 100%; height: 90px;
             background: var(--bg-nav); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--garis);
             padding: 0 6%; display: flex; align-items: center; justify-content: space-between; 
-            z-index: 1040; /* Diturunkan agar modal (1050+) bisa di atasnya */
+            z-index: 1040; 
         }
         .logo-smekda { font-weight: 800; font-size: 1.6rem; text-decoration: none; }
         .logo-smekda span { color: var(--emerald); }
@@ -64,7 +63,6 @@
             color: var(--teks-muted) !important;
         }
         
-        /* Highlight Navlink */
         .menu-nav a.active { color: var(--teks-utama) !important; }
         .menu-nav a.active::after {
             content: ''; position: absolute; bottom: -8px; left: 0;
@@ -72,7 +70,6 @@
             border-radius: 10px;
         }
 
-        /* PERBAIKAN GRID & KARTU BUKU */
         .grid-buku {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -135,12 +132,11 @@
             color: var(--emerald) !important;
         }
 
-        /* Modal Styling Adjustment - FIXED MEPEET NAVBAR */
         .modal {
-            z-index: 2100; /* Harus lebih tinggi dari navbar */
+            z-index: 2100; 
         }
         .modal-dialog {
-            margin-top: 110px; /* Jarak aman di bawah navbar (90px + 20px) */
+            margin-top: 110px;
         }
         .modal-content {
             background: var(--bg-body) !important;
@@ -150,10 +146,8 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* FIX THEME TOGGLE VISIBILITY */
         #theme-toggle { color: var(--btn-theme) !important; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
 
-        /* HERO */
         .hero-section { min-height: 100vh; display: flex; align-items: center; padding: 120px 6% 60px; position: relative; overflow: hidden; }
         .hero-img-perpus {
             position: absolute; right: 0; top: 0; width: 60%; height: 100%;
@@ -193,7 +187,7 @@
         @media (max-width: 991px) {
             .hero-teks { width: 100%; text-align: center; }
             .menu-nav { display: none; }
-            .modal-dialog { margin-top: 20px; } /* Reset untuk mobile agar tidak terlalu turun */
+            .modal-dialog { margin-top: 20px; } 
         }
     </style>
 </head>

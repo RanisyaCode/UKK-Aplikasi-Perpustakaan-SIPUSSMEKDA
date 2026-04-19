@@ -45,7 +45,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* --- STYLES UNTUK NOTIFIKASI FLOATING --- */
         .notif-container {
             position: fixed;
             bottom: 30px;
@@ -142,7 +141,6 @@
 
         .theme-toggle:hover { background: var(--emerald); color: white; transform: rotate(15deg); }
 
-        /* --- PROFIL & DROPDOWN --- */
         .user-profile-trigger {
             padding: 5px 8px; border-radius: 50px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -184,7 +182,6 @@
             background: rgba(239, 68, 68, 0.1) !important; color: #ef4444 !important;
         }
 
-        /* --- HERO --- */
         .hero-section {
             min-height: 100vh; display: flex; align-items: center; padding: 120px 6% 60px;
             position: relative;

@@ -14,7 +14,6 @@
 </script>
 
 <style>
-    /* FIX FINAL: jangan override layout desktop bawaan template */
     :root {
         --dynamic-bg: #020617;
         --dynamic-card: #0f172a;
@@ -65,7 +64,6 @@
         display: none !important;
     }
 
-    /* HANYA mobile yang dioverride */
     @media (max-width: 1024px) {
         .nxl-navigation {
             position: fixed !important;

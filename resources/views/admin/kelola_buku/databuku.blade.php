@@ -30,7 +30,6 @@
         --invert-icon: 0;
     }
 
-    /* FIX: Agar modal tidak tertutup layar gelap */
     .modal-backdrop { z-index: 1040 !important; }
     .modal { z-index: 1050 !important; }
     body.modal-open .admin-catalog { filter: none !important; backdrop-filter: none !important; }
@@ -114,16 +113,14 @@
         background: rgba(0, 0, 0, 0.02) !important;
     }
 
-    /* 1. SEMBUNYIKAN IKON RAKSASA */
     .pagination svg, 
     nav svg, 
     .pagination-modern svg {
         display: none !important;
     }
 
-    /* 2. PERBAIKI STRUKTUR PAGINATION LARAVEL */
     .pagination-modern nav div:first-child {
-        display: none !important; /* Sembunyikan text "Showing..." bawaan yang berantakan */
+        display: none !important; 
     }
 
     .pagination-modern .pagination {
@@ -135,7 +132,6 @@
         justify-content: center;
     }
 
-    /* 3. STYLING TOMBOL NOMOR (EMERALD BLUE) */
     .pagination-modern .page-item .page-link {
         width: 40px !important;
         height: 40px !important;
@@ -151,7 +147,6 @@
         transition: 0.3s !important;
     }
 
-    /* 4. HALAMAN AKTIF (GRADASI EMERALD BLUE) */
     .pagination-modern .page-item.active .page-link {
         background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%) !important;
         color: white !important;
@@ -166,7 +161,6 @@
         color: #3b82f6 !important;
     }
 
-    /* 6. PERBAIKI TOMBOL PREVIOUS/NEXT */
     .pagination-modern .page-item:first-child .page-link,
     .pagination-modern .page-item:last-child .page-link {
         width: auto !important;

@@ -2,7 +2,6 @@
     <div class="navbar-wrapper">
         <div class="m-header">
             <style>
-                /* --- MASTERPIECE DYNAMIC SIDEBAR --- */
                 :root {
                     --side-bg: #020617;
                     --side-border: rgba(255, 255, 255, 0.08);
@@ -21,7 +20,6 @@
                     --side-text-active: #0f172a;
                 }
 
-                /* Sidebar Base */
                 .nxl-navigation {
                     background-color: var(--side-bg) !important;
                     border-right: 1px solid var(--side-border) !important;
@@ -58,27 +56,22 @@
                     -webkit-text-fill-color: transparent;
                 }
 
-                /* --- MENU ITEMS --- */
                 .nxl-navigation .nxl-navbar .nxl-item .nxl-link {
                     color: var(--side-text) !important;
                 }
 
-                /* Parent Active State (Indikator Ijo samping) */
                 .nxl-navigation .nxl-navbar > .nxl-item.active > .nxl-link {
                     background-color: rgba(16, 185, 129, 0.12) !important;
                     color: var(--primary-emerald) !important;
                     box-shadow: inset 4px 0 0 0 var(--primary-emerald);
                 }
 
-                /* --- SUBMENU STYLE (POLOS) --- */
-                /* Membuat submenu yang aktif jadi hijau polos tanpa background ijo pekat */
                 .nxl-navigation .nxl-navbar .nxl-submenu .nxl-item.active > .nxl-link {
                     color: var(--primary-emerald) !important;
-                    background: transparent !important; /* Polos tanpa background box */
+                    background: transparent !important; 
                     font-weight: 700;
                 }
 
-                /* Responsive Mobile Fix */
                 @media (max-width: 1024px) {
                     .nxl-navigation {
                         left: -280px !important;

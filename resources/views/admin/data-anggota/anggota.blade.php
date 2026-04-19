@@ -7,11 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <style>
-    /* ==========================================================================
-       DYNAMIC THEME ENGINE - Menghubungkan ke Database
-       ========================================================================== */
     .admin-catalog {
-        /* Default / Dark Mode (Warna asli kamu) */
         --bg-body: #020617;
         --card-bg: rgba(255, 255, 255, 0.03);
         --card-bg-hover: rgba(255, 255, 255, 0.08);
@@ -22,13 +18,11 @@
         --bg-radial: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
         --bg-table-row: rgba(255, 255, 255, 0.02);
         
-        /* Aksen Tetap */
         --emerald: #10b981;
         --ocean: #0ea5e9;
         --gradasi: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
     }
 
-    /* Penyesuaian saat Light Mode aktif di database */
     html[data-theme="light"] .admin-catalog {
         --bg-body: #f8fafc;
         --card-bg: #ffffff;
@@ -41,9 +35,6 @@
         --bg-table-row: #ffffff;
     }
 
-    /* ==========================================================================
-       BASE DESIGN
-       ========================================================================== */
     .admin-catalog {
         font-family: 'Plus Jakarta Sans', sans-serif;
         padding: 1.5rem;
@@ -221,10 +212,6 @@
         100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
-   /* ==========================================================================
-    ULTRA MODERN EMERALD-BLUE PAGINATION
-    ========================================================================== */
-
     .pagination-modern svg {
         display: none !important;
     }
@@ -300,12 +287,10 @@
         gap: 12px;
     }
 
-    /* FIX: Agar modal tidak tertutup layar gelap */
     .modal-backdrop { z-index: 1040 !important; }
     .modal { z-index: 1050 !important; }
     body.modal-open .admin-catalog { filter: none !important; backdrop-filter: none !important; }
 
-    /* MODERN MODAL STYLE (SAMAIN DENGAN DATABUKU) */
     .modal-content {
         background: var(--card-bg) !important;
         backdrop-filter: blur(30px) !important;
@@ -338,7 +323,6 @@
         box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
     }
 
-    /* Pastikan modal mengikuti tema dan tidak gelap */
     .modal-content {
         background: var(--card-bg) !important;
         backdrop-filter: blur(15px) !important;
@@ -347,12 +331,10 @@
         color: var(--text-main) !important;
     }
 
-    /* Fix agar teks h5 dan b tetap terlihat di mode gelap/terang */
     .modal-body h5, .modal-body b {
         color: var(--text-pure) !important;
     }
 
-    /* Pastikan modal tidak 'memakan' area klik tabel */
     .modal {
         z-index: 1060 !important;
     }

@@ -6,11 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-    /* ==========================================================================
-       DYNAMIC THEME ENGINE
-       ========================================================================== */
     .admin-catalog {
-        /* Default / Dark Mode Variables (Sesuai desain asli kamu) */
         --bg-body: #020617;
         --card-bg: rgba(255, 255, 255, 0.03);
         --text-main: #ffffff;
@@ -24,7 +20,6 @@
         --radial-bg: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
     }
 
-    /* Override untuk Light Mode */
     html[data-theme="light"] .admin-catalog {
         --bg-body: #f8fafc;
         --card-bg: #ffffff;
@@ -36,9 +31,6 @@
         --radial-bg: radial-gradient(circle at 50% 50%, #f1f5f9 0%, #f8fafc 100%);
     }
 
-    /* ==========================================================================
-       IMPLEMENTASI STYLE (Desain asli dipertahankan 100%)
-       ========================================================================== */
     .admin-catalog {
         font-family: 'Plus Jakarta Sans', sans-serif;
         padding: 3rem 1rem;
@@ -96,7 +88,6 @@
         transition: all 0.3s ease;
     }
 
-    /* Dropdown Item Color Fix */
     .form-select option {
         background-color: var(--bg-body); 
         color: var(--text-main);
@@ -252,8 +243,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Ambil data session dari Laravel
-        // Kita gunakan operator || untuk jaga-jaga jika nilainya kosong
         const msgSuccess = "{{ session('success') }}";
         const msgError = "{{ session('error') }}";
         const hasErrors = "{{ $errors->any() ? 'true' : '' }}";

@@ -29,7 +29,6 @@
         --garis: rgba(15, 23, 42, 0.08);
     }
 
-    /* CSS Tambahan untuk Validasi */
     .error-text {
         color: #ef4444;
         font-size: 0.7rem;
@@ -42,9 +41,6 @@
         border-color: #ef4444 !important;
     }
 
-    /* ==========================================================================
-       DESIGN SECTIONS
-       ========================================================================== */
     .admin-catalog {
         font-family: 'Plus Jakarta Sans', sans-serif;
         padding: 3rem 1rem;

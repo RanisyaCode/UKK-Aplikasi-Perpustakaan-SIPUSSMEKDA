@@ -10,16 +10,12 @@ class PerpustakaanSiswaController extends Controller
 {
     public function index()
     {
-        // Mengambil semua buku, atau bisa pakai latest() agar yang baru diinput Admin muncul paling atas
         $daftarBuku = Buku::latest()->get(); 
         $user = Auth::user();
 
         return view('siswa.dashboard', compact('daftarBuku', 'user'));
     }
 
-    /**
-     * Menampilkan Detail Buku (Jika diklik)
-     */
     public function detailBuku($id)
     {
         $buku = Buku::findOrFail($id);
@@ -30,7 +26,6 @@ class PerpustakaanSiswaController extends Controller
     {
         $buku = Buku::findOrFail($buku_id);
         
-        // Jika stok habis, kembalikan dengan pesan error
         if ($buku->stok <= 0) {
             return redirect()->back()->with('error', 'Maaf, stok buku ini sedang habis.');
         }

@@ -71,7 +71,6 @@
             z-index: 1; 
         }
 
-        /* Perbaikan untuk layar Tablet/HP agar tidak kepotong */
         @media (max-width: 1100px) {
             .container-main { 
                 grid-template-columns: 1fr; 

@@ -6,9 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-    /* ==========================================================================
-       DYNAMIC THEME ADAPTATION
-       ========================================================================== */
     .admin-content-area {
         --card-bg-local: rgba(15, 23, 42, 0.7);
         --input-bg-local: rgba(255, 255, 255, 0.03);

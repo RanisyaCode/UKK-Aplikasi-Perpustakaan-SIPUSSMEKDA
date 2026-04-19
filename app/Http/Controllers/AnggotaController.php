@@ -8,29 +8,25 @@ use App\Models\User;
 class AnggotaController extends Controller
 {
     public function index() {
-        // Ambil data dari model User, urutkan yang terbaru, bagi per 5 data
         $siswas = User::latest()->paginate(5); 
     
         $data = [
             'title1' => 'Kelola Anggota',
             'title2' => 'Kelola Anggota',
-            'siswas' => $siswas // Kirim variabel $siswas hasil paginate ke view
+            'siswas' => $siswas 
         ];
     
         return view('admin.data-anggota.anggota', $data);
     }
 
-    // Menampilkan halaman form tambah anggota
-    // Menampilkan halaman form tambah anggota
     public function create() {
         $data = [
-            'title1' => 'Tambah Anggota', // Ini yang dicari oleh header.blade.php
+            'title1' => 'Tambah Anggota', 
             'title2' => 'Tambah Data Baru',
         ];
         return view('admin.data-anggota.anggota_create', $data);
     }
 
-    // Menampilkan halaman form edit anggota
     public function edit($id) {
         $siswa = User::findOrFail($id);
         $data = [
@@ -41,7 +37,6 @@ class AnggotaController extends Controller
         return view('admin.data-anggota.anggota_edit', $data);
     }
 
-    // Menghapus data anggota
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -107,7 +102,7 @@ class AnggotaController extends Controller
             'jenis_kelamin' => 'required',
             'no_telepon'    => 'required|numeric',
             'kelas'         => 'required',
-            'password'      => 'nullable|min:8', // Nullable karena opsional saat edit
+            'password'      => 'nullable|min:8', 
         ];
 
         $messages = [
